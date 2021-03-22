@@ -5,10 +5,11 @@ Rodrigo Pereira Nº100080
 
 Wargame
 */
-//o 1,6,7,8 está feito. Amanhã devo acabar o resto && tudo foi testado no code blocks com 0 erros
+//esqueleto da função de input feito
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <getopt.h>
 
 
 
@@ -136,8 +137,82 @@ char biblioOito[1][9] = {
     {56,56,56,56,45,56,56,56,56}
 };
 
-int main(){
+int main(int argc, char *argv[]){
 
+int opt = 0;
+char *t[20];
+while ((opt = getopt(argc, argv, "ht:j:p:d:1:2:3:4:5:6:7:8:")) != -1) {
+        switch (opt)
+        {
+        case 'h':
+            printf("\nBem-vindo ao WarGames\n");
+            printf("Projecto de Prog feito por:\n");
+            printf("\tHenrique Alves Pocinho Nº99952\n");
+            printf("\tRodrigo Pereira Nº100080\n\n");
+            printf("Comandos:\n");
+            printf("-t AxB : Serve para introduzir as dimensoes do tabuleiro onde A e o numero de linhas e B e o numero de colunas.\n");
+            printf("-j x : modo de jogo entre 0 e 2.\n");
+            printf("-p x : modo de posicionamento das pecas pelo computador, entre 1 e 2.\n");
+            printf("-d x : modo de disparo do computador, entre 1 e 3.\n");
+            printf("-Y X : y e um numero entre 1 e 8 que representa uma das pecas, e X e o numero dessas peças que existem.\n");
+        break;
+        
+        case 't':
+            t[0]=optarg;
+        break;
+
+        case 'j':
+
+        break;
+
+        case 'p':
+
+        break;
+
+        case 'd':
+
+        break;
+        
+        case '1':
+
+        break;
+
+        case '2':
+
+        break;
+
+        case '3':
+
+        break;
+
+        case '4':
+
+        break;
+
+        case '5':
+
+        break;
+
+        case '6':
+
+        break;
+
+        case '7':
+
+        break;
+
+        case '8':
+
+        break;
+
+        default:
+            printf("Erro de introducao\n");
+            exit(0);
+        break;
+        }
+    }   
+
+    printf("%s",*t);
 }
 
 

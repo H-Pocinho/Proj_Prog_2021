@@ -1,0 +1,2 @@
+22/03
+Adicinei a função que permite o input pela linha de comandos usando a funçãõ getops , falta elaborar as opções
