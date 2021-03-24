@@ -5,7 +5,7 @@ Rodrigo Pereira Nº100080
 
 Wargame
 */
-//esqueleto da função de input feito
+//Função de input finalizada
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -13,58 +13,58 @@ Wargame
 
 
 
-char biblio[43][9] = {
-    {45,45,45,45,45,45,45,45,45},
+char biblio[43][3][3] = {
+    {{45,45,45},{45,45,45},{45,45,45}},
 
-    {49,45,45,45,45,45,45,45,45},
-    {45,49,45,45,45,45,45,45,45},
-    {45,45,49,45,45,45,45,45,45},
-    {45,45,45,49,45,45,45,45,45},
-    {45,45,45,45,49,45,45,45,45},
-    {45,45,45,45,45,49,45,45,45},
-    {45,45,45,45,45,45,49,45,45},
-    {45,45,45,45,45,45,45,49,45},
-    {45,45,45,45,45,45,45,45,49},
+    {{49,45,45},{45,45,45},{45,45,45}},
+    {{45,49,45},{45,45,45},{45,45,45}},
+    {{45,45,49},{45,45,45},{45,45,45}},
+    {{45,45,45},{49,45,45},{45,45,45}},
+    {{45,45,45},{45,49,45},{45,45,45}},
+    {{45,45,45},{45,45,49},{45,45,45}},
+    {{45,45,45},{45,45,45},{49,45,45}},
+    {{45,45,45},{45,45,45},{45,49,45}},
+    {{45,45,45},{45,45,45},{45,45,49}},
 
-    {50,50,45,45,45,45,45,45,45},
-    {45,50,50,45,45,45,45,45,45},
-    {45,45,45,50,50,45,45,45,45},
-    {45,45,45,45,50,50,45,45,45},
-    {45,45,45,45,45,45,50,50,45},
-    {45,45,45,45,45,45,45,50,50},
-    {50,45,45,50,45,45,45,45,45},
-    {45,45,45,50,45,45,50,45,45},
-    {45,50,45,45,50,45,45,45,45},
-    {45,45,45,45,50,45,45,50,45},
-    {45,45,50,45,45,50,45,45,45},
-    {45,45,45,45,45,50,45,45,50},
+    {{50,50,45},{45,45,45},{45,45,45}},
+    {{45,50,50},{45,45,45},{45,45,45}},
+    {{45,45,45},{50,50,45},{45,45,45}},
+    {{45,45,45},{45,50,50},{45,45,45}},
+    {{45,45,45},{45,45,45},{50,50,45}},
+    {{45,45,45},{45,45,45},{45,50,50}},
+    {{50,45,45},{50,45,45},{45,45,45}},
+    {{45,45,45},{50,45,45},{50,45,45}},
+    {{45,50,45},{45,50,45},{45,45,45}},
+    {{45,45,45},{45,50,45},{45,50,45}},
+    {{45,45,50},{45,45,50},{45,45,45}},
+    {{45,45,45},{45,45,50},{45,45,50}},
 
-    {51,51,51,45,45,45,45,45,45},
-    {45,45,45,51,51,51,45,45,45},
-    {45,45,45,45,45,45,51,51,51},
-    {51,45,45,51,45,45,51,45,45},
-    {45,51,45,45,51,45,45,51,45},
-    {45,45,51,45,45,51,45,45,51},
+    {{51,51,51},{45,45,45},{45,45,45}},
+    {{45,45,45},{51,51,51},{45,45,45}},
+    {{45,45,45},{45,45,45},{51,51,51}},
+    {{51,45,45},{51,45,45},{51,45,45}},
+    {{45,51,45},{45,51,45},{45,51,45}},
+    {{45,45,51},{45,45,51},{45,45,51}},
 
-    {52,52,45,52,52,45,45,45,45},
-    {45,52,52,45,52,52,45,45,45},
-    {45,45,45,52,52,45,52,52,45},
-    {45,45,45,45,52,52,45,52,52},
+    {{52,52,45},{52,52,45},{45,45,45}},
+    {{45,52,52},{45,52,52},{45,45,45}},
+    {{45,45,45},{52,52,45},{52,52,45}},
+    {{45,45,45},{45,52,52},{45,52,52}},
 
-    {53,53,53,45,53,45,45,53,45},
-    {53,45,45,53,53,53,53,45,45},
-    {45,53,45,45,53,45,53,53,53},
-    {45,45,53,53,53,53,45,45,53},
+    {{53,53,53},{45,53,45},{45,53,45}},
+    {{53,45,45},{53,53,53},{53,45,45}},
+    {{45,53,45},{45,53,45},{53,53,53}},
+    {{45,45,53},{53,53,53},{45,45,53}},
 
-    {45,54,45,54,45,54,54,54,54},
-    {45,54,54,54,45,54,45,54,54},
-    {54,54,54,54,45,54,45,54,45},
-    {54,54,45,54,45,54,54,54,45},
+    {{45,54,45},{54,45,54},{54,54,54}},
+    {{45,54,54},{54,45,54},{45,54,54}},
+    {{54,54,54},{54,45,54},{45,54,45}},
+    {{54,54,45},{54,45,54},{54,54,45}},
 
-    {55,45,55,55,55,55,55,45,55},
-    {55,55,55,45,55,45,55,55,55},
+    {{55,45,55},{55,55,55},{55,45,55}},
+    {{55,55,55},{45,55,45},{55,55,55}},
 
-    {56,56,56,56,45,56,56,56,56}
+    {{56,56,56},{56,45,56},{56,56,56}}
 };
 
 char biblioZero[1][9] = {
@@ -137,82 +137,115 @@ char biblioOito[1][9] = {
     {56,56,56,56,45,56,56,56,56}
 };
 
-int main(int argc, char *argv[]){
+void textoAjuda(){
+    printf("\nBem-vindo ao WarGames\n");
+    printf("Projecto de Prog feito por:\n");
+    printf("\tHenrique Alves Pocinho Nº99952\n");
+    printf("\tRodrigo Pereira Nº100080\n\n");
+    printf("Comandos:\n");
+    printf("-t AxB : Serve para introduzir as dimensoes do tabuleiro onde A e o numero de linhas e B e o numero de colunas. (default 9x9)\n");
+    printf("-j x : modo de jogo entre 0 e 2. (default 0)\n");        
+    printf("-p x : modo de posicionamento das pecas pelo computador, entre 1 e 2. (default 1)\n");
+    printf("-d x : modo de disparo do computador, entre 1 e 3.(default 1)\n");
+    printf("-Y X : y e um numero entre 1 e 8 que representa uma das pecas, e X e o numero dessas pecas que existem.\n");
+}
 
-int opt = 0;
-char *t[20];
+int main(int argc, char *argv[]){
+int opt = 0,
+    linhas=9,
+    colunas=9,
+    modoJogo=0,
+    modoPosicionamento=1,
+    modoDisparo=1,
+    pecas[8]={0};
+
+opterr = 0;
 while ((opt = getopt(argc, argv, "ht:j:p:d:1:2:3:4:5:6:7:8:")) != -1) {
         switch (opt)
         {
-        case 'h':
-            printf("\nBem-vindo ao WarGames\n");
-            printf("Projecto de Prog feito por:\n");
-            printf("\tHenrique Alves Pocinho Nº99952\n");
-            printf("\tRodrigo Pereira Nº100080\n\n");
-            printf("Comandos:\n");
-            printf("-t AxB : Serve para introduzir as dimensoes do tabuleiro onde A e o numero de linhas e B e o numero de colunas.\n");
-            printf("-j x : modo de jogo entre 0 e 2.\n");
-            printf("-p x : modo de posicionamento das pecas pelo computador, entre 1 e 2.\n");
-            printf("-d x : modo de disparo do computador, entre 1 e 3.\n");
-            printf("-Y X : y e um numero entre 1 e 8 que representa uma das pecas, e X e o numero dessas peças que existem.\n");
-        break;
-        
         case 't':
-            t[0]=optarg;
+            sscanf(optarg, "%dx%d", &linhas, &colunas);
+            if (((linhas < 9) || (linhas>15)) || ((colunas < 9) || (colunas>24)) || ((colunas%3 != 0) || (linhas%3 != 0))){
+                printf("Valores inválidos para o tamanho, por favor tente de novo\n");
+                printf("Utilize um numero entre 9 e 15 para linhas e entre 9 e 24 para colunas e s0 utilize multiplos de 3\n");
+                exit(0);
+            }    
         break;
 
         case 'j':
-
+            sscanf(optarg, "%d", &modoJogo);
+            if (modoJogo<0 || modoJogo>2){
+                printf("Valores inválidos para o modo de jogo, por favor tente de novo\n");
+                printf("Utilize um numero entre 0 e 2\n");
+                exit(0);
+            }
         break;
 
         case 'p':
-
+            sscanf(optarg, "%d", &modoPosicionamento);
+            if (modoPosicionamento<1 || modoPosicionamento>2){
+                printf("Valores inválidos para o modo de posicionamento, por favor tente de novo\n");
+                printf("Utilize um numero entre 1 e 2\n");
+                exit(0);
+            }
         break;
 
         case 'd':
-
+            sscanf(optarg, "%d", &modoDisparo);
+            if (modoDisparo<1 || modoDisparo>3){
+                printf("Valores inválidos para o modo de disparo, por favor tente de novo\n");
+                printf("Utilize um numero entre 1 e 3\n");
+                exit(0);
+            }
         break;
         
         case '1':
-
+            sscanf(optarg, "%d", &pecas[0]);
         break;
 
         case '2':
-
+            sscanf(optarg, "%d", &pecas[1]);
         break;
 
         case '3':
-
+            sscanf(optarg, "%d", &pecas[2]);
         break;
 
         case '4':
-
+            sscanf(optarg, "%d", &pecas[3]);
         break;
 
         case '5':
-
+            sscanf(optarg, "%d", &pecas[4]);
         break;
 
         case '6':
-
+            sscanf(optarg, "%d", &pecas[5]);
         break;
 
         case '7':
-
+            sscanf(optarg, "%d", &pecas[6]);
         break;
 
         case '8':
-
+            sscanf(optarg, "%d", &pecas[7]);
         break;
 
         default:
-            printf("Erro de introducao\n");
-            exit(0);
+            printf("Erro de introducao, opcao desconhecida\n\n");
+        case 'h':
+            textoAjuda();
         break;
         }
-    }   
+    } 
+    printf("%d %d %d %d %d",linhas,colunas,modoJogo,modoPosicionamento,modoDisparo);
 
-    printf("%s",*t);
+    if ((modoJogo != 2) && (modoDisparo !=1))
+    {
+        textoAjuda();
+        exit(0);
+    }
+    
 }
 
 
