@@ -247,7 +247,31 @@ while ((opt = getopt(argc, argv, "ht:j:p:d:1:2:3:4:5:6:7:8:")) != -1) {
     }
     
 }
+void funtabuleiro(){
+        int linhas = 0, colunas = 0, count1 = 0, count2 = 0, count3;
+    printf("Numéro de linhas:");
+    //scanf("%d", &linhas);
+    printf("Número de colunas:");
+    //scanf("%d", &colunas);
+    char letras [24] = {"ABCDEFGHIJKLMNOPQRSTUVWX"};
+        //Tem aqui as restrições da proporção do tabuleiro
+    if (linhas>=9 && linhas<=15 && colunas>=9 && colunas<=24 && linhas%3==0 && colunas%3==0){
 
+        for (count1 = 1; count1<=linhas; count1++){
+            printf("%d", count1);
+            //Desenha as colunas e os números de cada linha
+            for (count2 = 0; count2<colunas; count2++){
+            //Desenha as linhas
+            }
+            printf("\n");
+        }
+        for (count3 = 0; count3 < colunas; count3++){
+            printf("  %c", letras[count3]);
+            //Coloca as letras no tabuleiro
+        }
+
+    }
+}
 
 
 
