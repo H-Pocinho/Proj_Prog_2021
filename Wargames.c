@@ -5,13 +5,31 @@ Rodrigo Pereira Nº100080
 
 Wargame
 */
-//Função de input finalizada
+
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <getopt.h>
+#include <math.h>
+#include <time.h>
 
-
+char tabuleiro[15][24] ={
+    {45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45},
+    {45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45},
+    {45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45},
+    {45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45},
+    {45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45},
+    {45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45},
+    {45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45},
+    {45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45},
+    {45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45},
+    {45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45},
+    {45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45},
+    {45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45},
+    {45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45},
+    {45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45},
+    {45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45}
+};
 
 char biblio[43][3][3] = {
     {{45,45,45},{45,45,45},{45,45,45}},
@@ -137,6 +155,12 @@ char biblioOito[1][9] = {
     {56,56,56,56,45,56,56,56,56}
 };
 
+
+
+
+
+
+
 void textoAjuda(){
     printf("\nBem-vindo ao WarGames\n");
     printf("Projecto de Prog feito por:\n");
@@ -150,275 +174,204 @@ void textoAjuda(){
     printf("-Y X : y e um numero entre 1 e 8 que representa uma das pecas, e X e o numero dessas pecas que existem.\n");
 }
 
-int main(int argc, char *argv[]){
-int opt = 0,
-    linhas=9,
-    colunas=9,
-    modoJogo=0,
-    modoPosicionamento=1,
-    modoDisparo=1,
-    pecas[8]={0};
-
-opterr = 0;
-while ((opt = getopt(argc, argv, "ht:j:p:d:1:2:3:4:5:6:7:8:")) != -1) {
-        switch (opt)
+int restricaoDois(int l, int c,char tabuleiro[15][24]){
+    int i,j,m,n,ltemp,ctemp;
+        for ( i = l; i < (l+3); i++)
         {
-        case 't':
-            sscanf(optarg, "%dx%d", &linhas, &colunas);
-            if (((linhas < 9) || (linhas>15)) || ((colunas < 9) || (colunas>24)) || ((colunas%3 != 0) || (linhas%3 != 0))){
-                printf("Valores inválidos para o tamanho, por favor tente de novo\n");
-                printf("Utilize um numero entre 9 e 15 para linhas e entre 9 e 24 para colunas e s0 utilize multiplos de 3\n");
-                exit(0);
-            }    
-        break;
+            for (j = c; j < (c+3); j++)
+            {
+                if (tabuleiro[i][j] != 45){
+                    for ( m = -1; m <=1; m++)
+                    {
+                        for ( n = -1; n <= 1; n++)
+                        {
+                            ltemp = m+i;
+                            ctemp = n+j;
 
-        case 'j':
-            sscanf(optarg, "%d", &modoJogo);
-            if (modoJogo<0 || modoJogo>2){
-                printf("Valores inválidos para o modo de jogo, por favor tente de novo\n");
-                printf("Utilize um numero entre 0 e 2\n");
-                exit(0);
+                           if ( ((ltemp < l) || (ltemp > (l+2))) || ((ctemp < c) || (ctemp > (c+2)))){
+                               if (tabuleiro[ltemp][ctemp] != 45 && tabuleiro[ltemp][ctemp] != 0){
+                                   return 1;
+                               }   
+                           }  
+                        }   
+                    }
+                }
             }
-        break;
-
-        case 'p':
-            sscanf(optarg, "%d", &modoPosicionamento);
-            if (modoPosicionamento<1 || modoPosicionamento>2){
-                printf("Valores inválidos para o modo de posicionamento, por favor tente de novo\n");
-                printf("Utilize um numero entre 1 e 2\n");
-                exit(0);
-            }
-        break;
-
-        case 'd':
-            sscanf(optarg, "%d", &modoDisparo);
-            if (modoDisparo<1 || modoDisparo>3){
-                printf("Valores inválidos para o modo de disparo, por favor tente de novo\n");
-                printf("Utilize um numero entre 1 e 3\n");
-                exit(0);
-            }
-        break;
-        
-        case '1':
-            sscanf(optarg, "%d", &pecas[0]);
-        break;
-
-        case '2':
-            sscanf(optarg, "%d", &pecas[1]);
-        break;
-
-        case '3':
-            sscanf(optarg, "%d", &pecas[2]);
-        break;
-
-        case '4':
-            sscanf(optarg, "%d", &pecas[3]);
-        break;
-
-        case '5':
-            sscanf(optarg, "%d", &pecas[4]);
-        break;
-
-        case '6':
-            sscanf(optarg, "%d", &pecas[5]);
-        break;
-
-        case '7':
-            sscanf(optarg, "%d", &pecas[6]);
-        break;
-
-        case '8':
-            sscanf(optarg, "%d", &pecas[7]);
-        break;
-
-        default:
-            printf("Erro de introducao, opcao desconhecida\n\n");
-        case 'h':
-            textoAjuda();
-        break;
         }
-    } 
-    printf("%d %d %d %d %d",linhas,colunas,modoJogo,modoPosicionamento,modoDisparo);
+    return 0;    
+};
 
-    if ((modoJogo != 2) && (modoDisparo !=1))
-    {
-        textoAjuda();
-        exit(0);
-    }
-    
-}
-void funtabuleiro(){
-        int linhas = 0, colunas = 0, count1 = 0, count2 = 0, count3;
-    printf("Numéro de linhas:");
-    //scanf("%d", &linhas);
-    printf("Número de colunas:");
-    //scanf("%d", &colunas);
+void funtabuleiro(int linhas, int colunas,char tabuleiro[15][24]){
+    int i, j,nmr;
     char letras [24] = {"ABCDEFGHIJKLMNOPQRSTUVWX"};
-        //Tem aqui as restrições da proporção do tabuleiro
-    if (linhas>=9 && linhas<=15 && colunas>=9 && colunas<=24 && linhas%3==0 && colunas%3==0){
-
-        for (count1 = 1; count1<=linhas; count1++){
-            printf("%d", count1);
-            //Desenha as colunas e os números de cada linha
-            for (count2 = 0; count2<colunas; count2++){
-            //Desenha as linhas
+        for (i = 0; i<linhas; i++){
+            for (j = 0; j<colunas; j++){
+                if (j==0)
+                {
+                    nmr=linhas-i;
+                    printf("%d ",nmr);
+                }
+                printf("%c ", tabuleiro[i][j]);
             }
             printf("\n");
         }
-        for (count3 = 0; count3 < colunas; count3++){
-            printf("  %c", letras[count3]);
-            //Coloca as letras no tabuleiro
-        }
-
-    }
-}
-
-
-
-/*
-void fun1(){
-    char tab1[3][3] = {"---","---","---"};
-    int g, h, i, j;
-    printf("Escolha a linha:");
-    if (scanf("%d", &g) != 1){
-        printf("Failled to read STDIN!\n");
-        exit(0);
-    }
-    g = g-1;
-    printf("\nEscolha a coluna:");
-    if (scanf("%d", &h) != 1){
-        printf("Failled to read STDIN!\n");
-        exit(0);
-    }
-    h = h - 1;
-    tab1[g][h] = '1';
-    printf("%s",tab1);
-}
-
-void fun2(){
-    char tab2[3][3] = {"---","---","---"};
-}
-
-void fun6(){
-    //Falta implentar um LOOP para quando o num !=1ou2ou3ou4
-    char tab6 [3][3] = {"---","---","---"};
-    int orient, conf=0, loop;
-    loop = 0;
-    printf("A ponta do barco para cima = 1\n");
-    printf("A ponta do barco para baixo = 2\n");
-    printf("A ponta do barco para esquerda = 3\n");
-    printf("A ponta do barco para direita = 4\n");
-    do
-    {
-        if (scanf("%d", &conf != 1)){
-            printf("Failled to read STDIN!\n");
-            exit(0);
-    }
-    } while (((conf =! 1) || (conf =! 2)) || ((conf =! 3) || (conf =! 4)));
-    
-
-    
-    switch(conf){
-    case 1:
-        strcpy(tab6[0],"-6-");
-        strcpy(tab6[1],"6-6");
-        strcpy(tab6[2],"666");
-        loop = 1;
-        printf("a");
-        break;
-
-    case 2:
-        strcpy(tab6[0],"666");
-        strcpy(tab6[1],"6-6");
-        strcpy(tab6[2],"-6-");
-        loop = 1;
-        break;
-        
-    case 3:
-        strcpy(tab6[0],"-66");
-        strcpy(tab6[1],"6-6");
-        strcpy(tab6[2],"-66");
-        loop = 1;
-        break;
-
-    case 4:
-        strcpy(tab6[0],"66-");
-        strcpy(tab6[1],"6-6"),
-        strcpy(tab6[2],"66-");
-        loop = 1;
-        break;
-
-    default:
-    printf("Erro");
-    break;
-    }
-}
-
-void fun7(){
-    char tab7[3][3] = {"---","---","---"};
-    int orient, conf, loop;
-    loop = 0;
-    conf = 0;
-    printf("Horizontal = 1\n");
-    printf("Vertical = 2\n");
-    while (conf != 1)
-    {
-        printf("Posicão:");
-        if (scanf("%d", &orient) != 1){
-            printf("Failled to read STDIN!\n");
-            exit(0);
-        }
-        printf("Tem a certeza?\t Sim = 1    Não = 0\n");
-    
-        if (scanf("%d", &conf) != 1){
-            printf("Failled to read STDIN!\n");
-            exit(0);
-        }
-        while (loop = 0)
+        printf("  ");
+        for (i = 0; i < colunas; i++)
         {
+            printf("%c ",letras[i]);
+        }
+        printf("\n"); 
+}
 
-        switch (orient)
+void modoPos1(int linhas,int colunas, char tabuleiro[][24],char biblio[43][3][3]){
+    int i,j,m,n,pecaRandom,try;
+    for (i = 0; i < linhas; i=i+3){
+        for ( j = 0; j < colunas; j=j+3){
+            try=0;
+            do{
+
+                pecaRandom=((rand()%42)+1);
+
+                for ( m = 0; m < 3 ; m++){
+                    for (n = 0; n < 3; n++){   
+                        tabuleiro[(m+i)][(n+j)]=biblio[0][m][n];
+                    }
+                }
+
+                for ( m = 0; m < 3 ; m++){
+                    for (n = 0; n < 3; n++){   
+                        tabuleiro[(m+i)][(n+j)]=biblio[pecaRandom][m][n];
+                    }
+                }
+                
+                try=try+1;
+                if (try>=3){
+                    for ( m = 0; m < 3 ; m++){
+                        for (n = 0; n < 3; n++){   
+                            tabuleiro[(m+i)][(n+j)]=biblio[5][m][n];
+                        }
+                    }
+                }
+
+            } while (restricaoDois(i,j,tabuleiro) != 0);
+        }
+    }
+};
+
+void modoPos2(int pecas[8], int linhas, int colunas){
+    int matrixsO;
+    int nPecas;
+    matrixsO = ((linhas*colunas)/9)/2;
+    nPecas=pecas[0]+pecas[1]+pecas[2]+pecas[3]+pecas[4]+pecas[5]+pecas[6]+pecas[7];
+    if (nPecas > matrixsO){
+        printf("As peças não cabem no tabuleiro");
+        exit(0);
+    }
+}
+
+
+int main(int argc, char *argv[]){
+
+    srand(time(NULL));
+    int opt = 0,
+        linhas=9,
+        colunas=9,
+        modoJogo=0,
+        modoPosicionamento=1,
+        modoDisparo=1,
+        pecas[8]={0};
+
+    opterr = 0;
+    while ((opt = getopt(argc, argv, "ht:j:p:d:1:2:3:4:5:6:7:8:")) != -1) {
+            switch (opt)
             {
-            case 1:
-            tab7[0][0] = '7';
-            tab7[0][1] = '7';
-            tab7[0][2] = '7';
-            tab7[1][0] = '-';
-            tab7[1][1] = '7';
-            tab7[1][2] = '-';
-            tab7[2][0] = '7';
-            tab7[2][1] = '7';
-            tab7[2][2] = '7';
-            loop = 1;
+            case 't':
+                sscanf(optarg, "%dx%d", &linhas, &colunas);
+                if (((linhas < 9) || (linhas>15)) || ((colunas < 9) || (colunas>24)) || ((colunas%3 != 0) || (linhas%3 != 0))){
+                    printf("Valores inválidos para o tamanho, por favor tente de novo\n");
+                    printf("Utilize um numero entre 9 e 15 para linhas e entre 9 e 24 para colunas e s0 utilize multiplos de 3\n");
+                    exit(0);
+                }    
             break;
 
-            case 2:
-            tab7[0][0] = '7';
-            tab7[0][1] = '-';
-            tab7[0][2] = '7';
-            tab7[1][0] = '7';
-            tab7[1][1] = '7';
-            tab7[1][2] = '7';
-            tab7[2][0] = '7';
-            tab7[2][1] = '-';
-            tab7[2][2] = '7';
-            loop = 1;
+            case 'j':
+                sscanf(optarg, "%d", &modoJogo);
+                if (modoJogo<0 || modoJogo>2){
+                    printf("Valores inválidos para o modo de jogo, por favor tente de novo\n");
+                    printf("Utilize um numero entre 0 e 2\n");
+                    exit(0);
+                }
+            break;
+
+            case 'p':
+                sscanf(optarg, "%d", &modoPosicionamento);
+                if (modoPosicionamento<1 || modoPosicionamento>2){
+                    printf("Valores inválidos para o modo de posicionamento, por favor tente de novo\n");
+                    printf("Utilize um numero entre 1 e 2\n");
+                    exit(0);
+                }
+            break;
+
+            case 'd':
+                sscanf(optarg, "%d", &modoDisparo);
+                if (modoDisparo<1 || modoDisparo>3){
+                    printf("Valores inválidos para o modo de disparo, por favor tente de novo\n");
+                    printf("Utilize um numero entre 1 e 3\n");
+                    exit(0);
+                }
+            break;
+            
+            case '1':
+                sscanf(optarg, "%d", &pecas[0]);
+            break;
+
+            case '2':
+                sscanf(optarg, "%d", &pecas[1]);
+            break;
+
+            case '3':
+                sscanf(optarg, "%d", &pecas[2]);
+            break;
+
+            case '4':
+                sscanf(optarg, "%d", &pecas[3]);
+            break;
+
+            case '5':
+                sscanf(optarg, "%d", &pecas[4]);
+            break;
+
+            case '6':
+                sscanf(optarg, "%d", &pecas[5]);
+            break;
+
+            case '7':
+                sscanf(optarg, "%d", &pecas[6]);
+            break;
+
+            case '8':
+                sscanf(optarg, "%d", &pecas[7]);
             break;
 
             default:
-            printf("Erro");
+                printf("Erro de introducao, opcao desconhecida\n\n");
+            case 'h':
+                textoAjuda();
             break;
             }
-        
+        } 
+
+    printf("%d %d %d %d %d \n",linhas,colunas,modoJogo,modoPosicionamento,modoDisparo);
+
+    if ((modoJogo != 2) && (modoDisparo !=1))
+        {
+            textoAjuda();
+            exit(0);
         }
-    }
+
+
+    funtabuleiro(linhas,colunas,tabuleiro);
+    modoPos1(linhas,colunas,tabuleiro,biblio);
+    funtabuleiro(linhas,colunas,tabuleiro);
+    return 0;
 }
-
-void fun8(){
-    char tab8[3][3] = {"888","8-8","888"};
-}
-
-
-void colocaPeça(){
-
-}*/

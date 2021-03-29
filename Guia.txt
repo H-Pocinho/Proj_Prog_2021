@@ -2,3 +2,6 @@
 Adicinei a função que permite o input pela linha de comandos usando a funçãõ getops , falta elaborar as opções
 24/03
 Alteração da estrutura das peças (passou de vetores para matrizes) todas as opções de entradas feitas, faltam as excepções
+29/3
+função que mostra o tabuleiro finalizada
+FEITO DCARALHO A MERDA FA FUNÇAO DA RESTRIÇÂO
