@@ -31,6 +31,24 @@ char tabuleiro[15][24] ={
     {45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45}
 };
 
+char tabuleiroGUI[15][24] ={
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}
+};
+
 char biblio[43][3][3] = {
     {{45,45,45},{45,45,45},{45,45,45}},
 
@@ -201,7 +219,7 @@ int restricaoDois(int l, int c,char tabuleiro[15][24]){
     return 0;    
 };
 
-void funtabuleiro(int linhas, int colunas,char tabuleiro[15][24]){
+void mostratabuleiro(int linhas, int colunas,char tabuleiro[15][24]){
     int i, j,nmr;
     char letras [24] = {"ABCDEFGHIJKLMNOPQRSTUVWX"};
         for (i = 0; i<linhas; i++){
@@ -269,6 +287,34 @@ void modoPos2(int pecas[8], int linhas, int colunas){
     }
 }
 
+
+void modoTiro1(int linhas, int colunas, char tabuleiro[15][24], char tabuleiroGUI[][24]){
+    int i,j,nmrpecas=0,tiroL,tiroC,key;
+    for (i = 0; i<linhas; i++){
+        for (j = 0; j<colunas; j++){
+            if(tabuleiro[i][j] != 45){
+                nmrpecas++;
+            }
+        }
+    }
+    do{
+        key=0;
+        do{
+            tiroL=(rand() % linhas);
+            tiroC=(rand() % colunas);
+            if (tabuleiroGUI[tiroL][tiroC]==0){
+                tabuleiroGUI[tiroL][tiroC]=tabuleiro[tiroL][tiroC];
+                if (tabuleiro[tiroL][tiroC]!=45)
+                {
+                    nmrpecas--;
+                }
+                
+                key=1;
+            }    
+        } while (key == 0);
+        mostratabuleiro(linhas,colunas,tabuleiroGUI);
+    } while (nmrpecas>0);
+};
 
 int main(int argc, char *argv[]){
 
@@ -370,8 +416,10 @@ int main(int argc, char *argv[]){
         }
 
 
-    funtabuleiro(linhas,colunas,tabuleiro);
+    mostratabuleiro(linhas,colunas,tabuleiro);
     modoPos1(linhas,colunas,tabuleiro,biblio);
-    funtabuleiro(linhas,colunas,tabuleiro);
+    mostratabuleiro(linhas,colunas,tabuleiro);
+    mostratabuleiro(linhas,colunas,tabuleiroGUI);
+    modoTiro1(linhas,colunas,tabuleiro,tabuleiroGUI);
     return 0;
 }

@@ -5,3 +5,5 @@ Alteração da estrutura das peças (passou de vetores para matrizes) todas as o
 29/3
 função que mostra o tabuleiro finalizada
 FEITO DCARALHO A MERDA FA FUNÇAO DA RESTRIÇÂO
+30/3
+Função tiro 1
