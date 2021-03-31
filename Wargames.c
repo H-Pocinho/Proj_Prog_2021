@@ -175,7 +175,9 @@ char biblioOito[1][9] = {
 
 
 
+void tiro2ConfirmaPeca(){
 
+};
 
 
 
@@ -190,15 +192,16 @@ void textoAjuda(){
     printf("-p x : modo de posicionamento das pecas pelo computador, entre 1 e 2. (default 1)\n");
     printf("-d x : modo de disparo do computador, entre 1 e 3.(default 1)\n");
     printf("-Y X : y e um numero entre 1 e 8 que representa uma das pecas, e X e o numero dessas pecas que existem.\n");
-}
+};
 
-int restricaoDois(int l, int c,char tabuleiro[15][24]){
+int restricaoUm(int l, int c,char tabuleiro[15][24]){
     int i,j,m,n,ltemp,ctemp;
         for ( i = l; i < (l+3); i++)
         {
             for (j = c; j < (c+3); j++)
             {
-                if (tabuleiro[i][j] != 45){
+                if (tabuleiro[i][j] != 45)
+                {
                     for ( m = -1; m <=1; m++)
                     {
                         for ( n = -1; n <= 1; n++)
@@ -206,8 +209,10 @@ int restricaoDois(int l, int c,char tabuleiro[15][24]){
                             ltemp = m+i;
                             ctemp = n+j;
 
-                           if ( ((ltemp < l) || (ltemp > (l+2))) || ((ctemp < c) || (ctemp > (c+2)))){
-                               if (tabuleiro[ltemp][ctemp] != 45 && tabuleiro[ltemp][ctemp] != 0){
+                           if ( ((ltemp < l) || (ltemp > (l+2))) || ((ctemp < c) || (ctemp > (c+2))))
+                           {
+                               if (tabuleiro[ltemp][ctemp] != 45 && tabuleiro[ltemp][ctemp] != 0)
+                               {
                                    return 1;
                                }   
                            }  
@@ -239,7 +244,7 @@ void mostratabuleiro(int linhas, int colunas,char tabuleiro[15][24]){
             printf("%c ",letras[i]);
         }
         printf("\n"); 
-}
+};
 
 void modoPos1(int linhas,int colunas, char tabuleiro[][24],char biblio[43][3][3]){
     int i,j,m,n,pecaRandom,try;
@@ -248,7 +253,7 @@ void modoPos1(int linhas,int colunas, char tabuleiro[][24],char biblio[43][3][3]
             try=0;
             do{
 
-                pecaRandom=((rand()%42)+1);
+                pecaRandom=((rand()%43));
 
                 for ( m = 0; m < 3 ; m++){
                     for (n = 0; n < 3; n++){   
@@ -270,8 +275,7 @@ void modoPos1(int linhas,int colunas, char tabuleiro[][24],char biblio[43][3][3]
                         }
                     }
                 }
-
-            } while (restricaoDois(i,j,tabuleiro) != 0);
+            } while (restricaoUm(i,j,tabuleiro) != 0);
         }
     }
 };
@@ -285,8 +289,7 @@ void modoPos2(int pecas[8], int linhas, int colunas){
         printf("As peças não cabem no tabuleiro");
         exit(0);
     }
-}
-
+};
 
 void modoTiro1(int linhas, int colunas, char tabuleiro[15][24], char tabuleiroGUI[][24]){
     int i,j,nmrpecas=0,tiroL,tiroC,key;
@@ -316,6 +319,31 @@ void modoTiro1(int linhas, int colunas, char tabuleiro[15][24], char tabuleiroGU
     } while (nmrpecas>0);
 };
 
+void modoTiro2(int linhas, int colunas, char tabuleiro[15][24], char tabuleiroGUI[][24]){
+   int i,j,tipoPeca=1,nmrDePeca=0,tiro;
+   int ordemTiro[9][2]={{1,1},{0,1},{2,1},{1,0},{1,2},{0,0},{2,2},{0,2},{2,0}};     //ordem pela qual se dá os tiros, iamgina uma matriz de 3x3 em que o ponto 1,1 é o centro
+    for ( i = 0; i < linhas; i=i+3)
+    {
+        for (j = 0; j < colunas; j=j+3)
+        {                                               //estes 2 fors servem para rodar a quadricula em que estamos a alterar coisas
+            nmrDePeca=0;                                //numero de partes de uma peça 
+            for ( tiro = 0; tiro < 9; tiro++)           //vai ~percorrer o padrão descrito em cima
+            {
+                tabuleiroGUI[i+ordemTiro[tiro][0]][j+ordemTiro[tiro][1]]=tabuleiro[i+ordemTiro[tiro][0]][j+ordemTiro[tiro][1]];     //tiro a ser dado aka passa a informação do tabuleiro invisel para o visivel(GUI)
+                mostratabuleiro(linhas,colunas,tabuleiroGUI);                           //print do tabuleiro visivel
+                if(tabuleiroGUI[i+ordemTiro[tiro][0]][j+ordemTiro[tiro][1]] != 45)      //se for diferente de um traço. aka se for uma peça, regista-se o tipo de peça e aumenta-se a contagem do nmr de pedaços de peças, quando esses dois numeros forem iguais é pq o barco foi ao fundo aka se afundares 2 peças do barco tipo 2 então o barco afunda e este loop serve para fazer isso
+                {
+                    tipoPeca = tabuleiroGUI[i+ordemTiro[tiro][0]][j+ordemTiro[tiro][1]] - 48;
+                    nmrDePeca++;
+                    if(nmrDePeca==tipoPeca){
+                        break;
+                    }
+                }
+            }
+        }
+    }
+};
+
 int main(int argc, char *argv[]){
 
     srand(time(NULL));
@@ -335,7 +363,7 @@ int main(int argc, char *argv[]){
                 sscanf(optarg, "%dx%d", &linhas, &colunas);
                 if (((linhas < 9) || (linhas>15)) || ((colunas < 9) || (colunas>24)) || ((colunas%3 != 0) || (linhas%3 != 0))){
                     printf("Valores inválidos para o tamanho, por favor tente de novo\n");
-                    printf("Utilize um numero entre 9 e 15 para linhas e entre 9 e 24 para colunas e s0 utilize multiplos de 3\n");
+                    printf("Utilize 9, 12 ou 15 para linhas e 9, 12, 15, 18, 21 ou 24 para colunas\n");
                     exit(0);
                 }    
             break;
@@ -420,6 +448,6 @@ int main(int argc, char *argv[]){
     modoPos1(linhas,colunas,tabuleiro,biblio);
     mostratabuleiro(linhas,colunas,tabuleiro);
     mostratabuleiro(linhas,colunas,tabuleiroGUI);
-    modoTiro1(linhas,colunas,tabuleiro,tabuleiroGUI);
+    modoTiro2(linhas,colunas,tabuleiro,tabuleiroGUI);
     return 0;
-}
+};
