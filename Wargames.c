@@ -13,6 +13,15 @@ Wargame
 #include <math.h>
 #include <time.h>
 
+
+void sleep()
+{
+   int i = 0;
+   while (i < 150000000)  { i++; }
+}
+
+
+
 char tabuleiro[15][24] ={
     {45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45},
     {45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45},
@@ -173,11 +182,6 @@ char biblioOito[1][9] = {
     {56,56,56,56,45,56,56,56,56}
 };
 
-
-
-void tiro2ConfirmaPeca(){
-
-};
 
 
 
@@ -344,6 +348,46 @@ void modoTiro2(int linhas, int colunas, char tabuleiro[15][24], char tabuleiroGU
     }
 };
 
+void modoTiro3(int linhas, int colunas, char tabuleiro[15][24], char tabuleiroGUI[][24]){
+   int m,n,ltemp,ctemp,i,j,tipoPeca=1,nmrDePeca=0,tiro;
+   int ordemTiro[9][2]={{1,1},{0,1},{2,1},{1,0},{1,2},{0,0},{2,2},{0,2},{2,0}};     
+    for ( i = 0; i < linhas; i=i+3){
+        for (j = 0; j < colunas; j=j+3){                                               
+            nmrDePeca=0;                               
+            for ( tiro = 0; tiro < 9; tiro++){
+                if (tabuleiroGUI[i+ordemTiro[tiro][0]][j+ordemTiro[tiro][1]]==45){
+                    continue;
+                }
+                
+                tabuleiroGUI[i+ordemTiro[tiro][0]][j+ordemTiro[tiro][1]]=tabuleiro[i+ordemTiro[tiro][0]][j+ordemTiro[tiro][1]];     
+                mostratabuleiro(linhas,colunas,tabuleiroGUI);           
+                sleep();                
+                if(tabuleiroGUI[i+ordemTiro[tiro][0]][j+ordemTiro[tiro][1]] != 45){
+                    tipoPeca = tabuleiroGUI[i+ordemTiro[tiro][0]][j+ordemTiro[tiro][1]] - 48;
+                    nmrDePeca++;
+                    if(nmrDePeca==tipoPeca){
+                        for ( ltemp = i; ltemp < (i+3); ltemp++){
+                            for (ctemp = j; ctemp < (j+3); ctemp++){
+                                if (tabuleiroGUI[ltemp][ctemp] != 45 && tabuleiroGUI[ltemp][ctemp] != 0){
+                                    for ( m = -1; m <=1; m++){
+                                        for ( n = -1; n <= 1; n++){
+                                            if (tabuleiroGUI[ltemp+m][ctemp+n]==0 && ltemp<15 && ctemp<24){
+                                                tabuleiroGUI[ltemp+m][ctemp+n]=45;
+                                            }   
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    mostratabuleiro(linhas,colunas,tabuleiroGUI);
+                    break;
+                    }
+                }
+            }
+        }
+    }
+};
+
 int main(int argc, char *argv[]){
 
     srand(time(NULL));
@@ -448,6 +492,6 @@ int main(int argc, char *argv[]){
     modoPos1(linhas,colunas,tabuleiro,biblio);
     mostratabuleiro(linhas,colunas,tabuleiro);
     mostratabuleiro(linhas,colunas,tabuleiroGUI);
-    modoTiro2(linhas,colunas,tabuleiro,tabuleiroGUI);
+    modoTiro3(linhas,colunas,tabuleiro,tabuleiroGUI);
     return 0;
 };
