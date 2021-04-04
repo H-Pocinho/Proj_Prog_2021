@@ -13,15 +13,6 @@ Wargame
 #include <math.h>
 #include <time.h>
 
-
-void sleep()
-{
-   int i = 0;
-   while (i < 150000000)  { i++; }
-}
-
-
-
 char tabuleiro[15][24] ={
     {45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45},
     {45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45},
@@ -112,75 +103,8 @@ char biblio[43][3][3] = {
     {{56,56,56},{56,45,56},{56,56,56}}
 };
 
-char biblioZero[1][9] = {
-    {45,45,45,45,45,45,45,45,45}
-};
+int inicioPecas[9]={0,1,10,22,28,32,36,40,42};
 
-char biblioUm[9][9] = {
-    {49,45,45,45,45,45,45,45,45},
-    {45,49,45,45,45,45,45,45,45},
-    {45,45,49,45,45,45,45,45,45},
-    {45,45,45,49,45,45,45,45,45},
-    {45,45,45,45,49,45,45,45,45},
-    {45,45,45,45,45,49,45,45,45},
-    {45,45,45,45,45,45,49,45,45},
-    {45,45,45,45,45,45,45,49,45},
-    {45,45,45,45,45,45,45,45,49}
-};
-
-char biblioDois[12][9] = {
-    {50,50,45,45,45,45,45,45,45},
-    {45,50,50,45,45,45,45,45,45},
-    {45,45,45,50,50,45,45,45,45},
-    {45,45,45,45,50,50,45,45,45},
-    {45,45,45,45,45,45,50,50,45},
-    {45,45,45,45,45,45,45,50,50},
-    {50,45,45,50,45,45,45,45,45},
-    {45,45,45,50,45,45,50,45,45},
-    {45,50,45,45,50,45,45,45,45},
-    {45,45,45,45,50,45,45,50,45},
-    {45,45,50,45,45,50,45,45,45},
-    {45,45,45,45,45,50,45,45,50}
-};
-
-char biblioTres[6][9] = {
-    {51,51,51,45,45,45,45,45,45},
-    {45,45,45,51,51,51,45,45,45},
-    {45,45,45,45,45,45,51,51,51},
-    {51,45,45,51,45,45,51,45,45},
-    {45,51,45,45,51,45,45,51,45},
-    {45,45,51,45,45,51,45,45,51}
-};
-
-char biblioQuatro[4][9] = {
-    {52,52,45,52,52,45,45,45,45},
-    {45,52,52,45,52,52,45,45,45},
-    {45,45,45,52,52,45,52,52,45},
-    {45,45,45,45,52,52,45,52,52}
-};
-
-char biblioCinco[4][9] = {
-    {53,53,53,45,53,45,45,53,45},
-    {53,45,45,53,53,53,53,45,45},
-    {45,53,45,45,53,45,53,53,53},
-    {45,45,53,53,53,53,45,45,53}
-};
-
-char biblioSeis[4][9] = {
-    {45,54,45,54,45,54,54,54,54},
-    {45,54,54,54,45,54,45,54,54},
-    {54,54,54,54,45,54,45,54,45},
-    {54,54,45,54,45,54,54,54,45}
-};
-
-char biblioSete[2][9] = {
-    {55,45,55,55,55,55,55,45,55},
-    {55,55,55,45,55,45,55,55,55}
-};
-
-char biblioOito[1][9] = {
-    {56,56,56,56,45,56,56,56,56}
-};
 
 
 
@@ -228,30 +152,34 @@ int restricaoUm(int l, int c,char tabuleiro[15][24]){
     return 0;    
 };
 
-void mostratabuleiro(int linhas, int colunas,char tabuleiro[15][24]){
+void mostratabuleiro(int linhas, int colunas,char tabuleiro[15][24],int pecas[8]){
     int i, j,nmr;
     char letras [24] = {"ABCDEFGHIJKLMNOPQRSTUVWX"};
-        for (i = 0; i<linhas; i++){
-            for (j = 0; j<colunas; j++){
-                if (j==0)
-                {
-                    nmr=linhas-i;
+    printf("%dx%d %d %d %d %d %d %d %d %d\n",colunas,linhas,pecas[0],pecas[1],pecas[2],pecas[3],pecas[4],pecas[5],pecas[6],pecas[7]);
+    for (i = 0; i<linhas; i++){
+        for (j = 0; j<colunas; j++){
+            if (j==0){
+                nmr=linhas-i;
+                if (nmr<10){
+                    printf(" %d ",nmr);
+                }
+                else{
                     printf("%d ",nmr);
                 }
-                printf("%c ", tabuleiro[i][j]);
             }
-            printf("\n");
+            printf("%c ", tabuleiro[i][j]);
         }
-        printf("  ");
-        for (i = 0; i < colunas; i++)
-        {
-            printf("%c ",letras[i]);
-        }
-        printf("\n"); 
+        printf("\n");
+    }
+    printf("  ");
+    for (i = 0; i < colunas; i++){
+        printf("%c ",letras[i]);
+    }
+    printf("\n"); 
 };
 
-void modoPos1(int linhas,int colunas, char tabuleiro[][24],char biblio[43][3][3]){
-    int i,j,m,n,pecaRandom,try;
+void modoPos1(int linhas,int colunas, char tabuleiro[][24],int pecas[]){
+    int i,j,m,n,tipoPeca,pecaRandom,try;
     for (i = 0; i < linhas; i=i+3){
         for ( j = 0; j < colunas; j=j+3){
             try=0;
@@ -271,7 +199,7 @@ void modoPos1(int linhas,int colunas, char tabuleiro[][24],char biblio[43][3][3]
                     }
                 }
                 
-                try=try+1;
+                
                 if (try>=3){
                     for ( m = 0; m < 3 ; m++){
                         for (n = 0; n < 3; n++){   
@@ -279,31 +207,144 @@ void modoPos1(int linhas,int colunas, char tabuleiro[][24],char biblio[43][3][3]
                         }
                     }
                 }
+                try=try+1;
             } while (restricaoUm(i,j,tabuleiro) != 0);
         }
     }
-};
 
-void modoPos2(int pecas[8], int linhas, int colunas){
-    int matrixsO;
-    int nPecas;
-    matrixsO = ((linhas*colunas)/9)/2;
-    nPecas=pecas[0]+pecas[1]+pecas[2]+pecas[3]+pecas[4]+pecas[5]+pecas[6]+pecas[7];
-    if (nPecas > matrixsO){
-        printf("As peças não cabem no tabuleiro");
-        exit(0);
+    for ( i = 0; i < linhas; i=i+3){
+        for ( j = 0; j < colunas; j=j+3){
+            for ( m = 0; m < 3 ; m++){
+                for (n = 0; n < 3; n++){   
+                    tipoPeca=(int)tabuleiro[(m+i)][(n+j)];   
+                    if (tipoPeca!=45){
+                        pecas[tipoPeca - 49]=pecas[tipoPeca - 49]+1;
+                    }   
+                }
+            }
+        }  
     }
+
+    for ( i = 0; i < 8; i++){
+        pecas[i]=pecas[i]/(i+1);
+    }
+    
 };
 
-void modoTiro1(int linhas, int colunas, char tabuleiro[15][24], char tabuleiroGUI[][24]){
-    int i,j,nmrpecas=0,tiroL,tiroC,key;
-    for (i = 0; i<linhas; i++){
-        for (j = 0; j<colunas; j++){
-            if(tabuleiro[i][j] != 45){
-                nmrpecas++;
+int modoPos2(int pecas[8], int linhas, int colunas, int nmrPecas, char tabuleiro[][24]){
+    int i,j,m,n,l;
+    int tipoPeca,variantePeca,flagRepeticaoVariante,posicaoVariante,cnt8tentativas,flagPecaUsada,cnt1000=0;
+    int pecasUsadas[8]={9,9,9,9,9,9,9,9};
+    int nmrTotal= (linhas*colunas)/9;
+    int nmrVazias = nmrTotal-nmrPecas;
+    int quantidadePecas[9]={nmrVazias,pecas[0],pecas[1],pecas[2],pecas[3],pecas[4],pecas[5],pecas[6],pecas[7]};
+    do{
+        for (i = 0; i<linhas; i++){
+            for (j = 0; j<colunas; j++){
+                tabuleiro[i][j]=45;
             }
         }
+        nmrTotal= (linhas*colunas)/9;
+        for ( l = 0; l < 9; l++){
+            if (l==0){
+                quantidadePecas[l]=nmrVazias;
+            }
+            else{
+                quantidadePecas[l]=pecas[l-1];
+            }
+        }
+        
+        for (i = 0; i < linhas; i=i+3){
+            for ( j = 0; j < colunas; j=j+3){
+                cnt8tentativas=0;
+                do{
+                    do{
+                        flagPecaUsada=0;
+                        tipoPeca=rand() % 9;
+                        for (l = 0; l < 8; l++){
+                            if (tipoPeca==pecasUsadas[l]){
+                                flagPecaUsada=1;
+                            }
+                        }
+                        if (flagPecaUsada==1){
+                            continue;
+                        }
+                    } while (quantidadePecas[tipoPeca]<=0);
+
+
+                    if (tipoPeca==8){
+                        variantePeca=42;
+                    }
+                    else{
+                        variantePeca = (rand() % (inicioPecas[tipoPeca+1] - inicioPecas[tipoPeca])) + inicioPecas[tipoPeca];
+                    }
+
+                    for ( m = 0; m < 3 ; m++){
+                        for (n = 0; n < 3; n++){   
+                            tabuleiro[(m+i)][(n+j)]=biblio[variantePeca][m][n];
+                        }
+                    }
+
+                    if (restricaoUm(i,j,tabuleiro) == 0){
+                        quantidadePecas[tipoPeca]--;
+                        nmrTotal--;
+                        break;
+                    }
+
+                    if (tipoPeca==8){
+                        pecasUsadas[cnt8tentativas]=tipoPeca;
+                        cnt8tentativas++;
+                    }
+                    else{
+                        posicaoVariante=0;
+                        do{
+                            variantePeca = inicioPecas[tipoPeca]+posicaoVariante;
+                            for ( m = 0; m < 3 ; m++){
+                                for (n = 0; n < 3; n++){   
+                                    tabuleiro[(m+i)][(n+j)]=biblio[variantePeca][m][n];
+                                }
+                            }
+                            if (restricaoUm(i,j,tabuleiro) == 0){
+                                break;
+                            }
+                            posicaoVariante++;
+                        } while (variantePeca < inicioPecas[tipoPeca+1]);
+                        if (variantePeca >= inicioPecas[tipoPeca+1]){
+                            pecasUsadas[cnt8tentativas]=tipoPeca;
+                            cnt8tentativas++;
+                        }
+                        if (restricaoUm(i,j,tabuleiro) == 0){
+                            quantidadePecas[tipoPeca]--;
+                            nmrTotal--;
+                            break;
+                        }
+                    }                    
+                } while (cnt8tentativas<8);
+                if (nmrTotal<=0){
+                    return 1;
+                }
+                if (cnt8tentativas==8){
+                    cnt1000++;
+                    break;
+                }
+            }
+            if (cnt8tentativas==8){
+                break;
+            }
+        }
+    } while (cnt1000<1000);
+    return -1;
+};
+
+void modoTiro1(int linhas, int colunas, char tabuleiro[15][24], char tabuleiroGUI[][24],int pecas[8]){
+    int i,nmrpecas=0,tiroL,tiroC,key;
+
+
+    for ( i = 0; i < 8; i++)
+    {
+        nmrpecas=nmrpecas+pecas[i]*i;
     }
+
     do{
         key=0;
         do{
@@ -319,11 +360,11 @@ void modoTiro1(int linhas, int colunas, char tabuleiro[15][24], char tabuleiroGU
                 key=1;
             }    
         } while (key == 0);
-        mostratabuleiro(linhas,colunas,tabuleiroGUI);
+        mostratabuleiro(linhas,colunas,tabuleiroGUI,pecas);
     } while (nmrpecas>0);
 };
 
-void modoTiro2(int linhas, int colunas, char tabuleiro[15][24], char tabuleiroGUI[][24]){
+void modoTiro2(int linhas, int colunas, char tabuleiro[15][24], char tabuleiroGUI[][24],int pecas[8]){
    int i,j,tipoPeca=1,nmrDePeca=0,tiro;
    int ordemTiro[9][2]={{1,1},{0,1},{2,1},{1,0},{1,2},{0,0},{2,2},{0,2},{2,0}};     //ordem pela qual se dá os tiros, iamgina uma matriz de 3x3 em que o ponto 1,1 é o centro
     for ( i = 0; i < linhas; i=i+3)
@@ -331,10 +372,10 @@ void modoTiro2(int linhas, int colunas, char tabuleiro[15][24], char tabuleiroGU
         for (j = 0; j < colunas; j=j+3)
         {                                               //estes 2 fors servem para rodar a quadricula em que estamos a alterar coisas
             nmrDePeca=0;                                //numero de partes de uma peça 
-            for ( tiro = 0; tiro < 9; tiro++)           //vai ~percorrer o padrão descrito em cima
+            for ( tiro = 0; tiro < 9; tiro++)           //vai percorrer o padrão descrito em cima
             {
                 tabuleiroGUI[i+ordemTiro[tiro][0]][j+ordemTiro[tiro][1]]=tabuleiro[i+ordemTiro[tiro][0]][j+ordemTiro[tiro][1]];     //tiro a ser dado aka passa a informação do tabuleiro invisel para o visivel(GUI)
-                mostratabuleiro(linhas,colunas,tabuleiroGUI);                           //print do tabuleiro visivel
+                mostratabuleiro(linhas,colunas,tabuleiroGUI,pecas);                           //print do tabuleiro visivel
                 if(tabuleiroGUI[i+ordemTiro[tiro][0]][j+ordemTiro[tiro][1]] != 45)      //se for diferente de um traço. aka se for uma peça, regista-se o tipo de peça e aumenta-se a contagem do nmr de pedaços de peças, quando esses dois numeros forem iguais é pq o barco foi ao fundo aka se afundares 2 peças do barco tipo 2 então o barco afunda e este loop serve para fazer isso
                 {
                     tipoPeca = tabuleiroGUI[i+ordemTiro[tiro][0]][j+ordemTiro[tiro][1]] - 48;
@@ -348,7 +389,7 @@ void modoTiro2(int linhas, int colunas, char tabuleiro[15][24], char tabuleiroGU
     }
 };
 
-void modoTiro3(int linhas, int colunas, char tabuleiro[15][24], char tabuleiroGUI[][24]){
+void modoTiro3(int linhas, int colunas, char tabuleiro[15][24], char tabuleiroGUI[][24],int pecas[8]){
    int m,n,ltemp,ctemp,i,j,tipoPeca=1,nmrDePeca=0,tiro;
    int ordemTiro[9][2]={{1,1},{0,1},{2,1},{1,0},{1,2},{0,0},{2,2},{0,2},{2,0}};     
     for ( i = 0; i < linhas; i=i+3){
@@ -360,8 +401,7 @@ void modoTiro3(int linhas, int colunas, char tabuleiro[15][24], char tabuleiroGU
                 }
                 
                 tabuleiroGUI[i+ordemTiro[tiro][0]][j+ordemTiro[tiro][1]]=tabuleiro[i+ordemTiro[tiro][0]][j+ordemTiro[tiro][1]];     
-                mostratabuleiro(linhas,colunas,tabuleiroGUI);           
-                sleep();                
+                mostratabuleiro(linhas,colunas,tabuleiroGUI,pecas);                          
                 if(tabuleiroGUI[i+ordemTiro[tiro][0]][j+ordemTiro[tiro][1]] != 45){
                     tipoPeca = tabuleiroGUI[i+ordemTiro[tiro][0]][j+ordemTiro[tiro][1]] - 48;
                     nmrDePeca++;
@@ -371,7 +411,7 @@ void modoTiro3(int linhas, int colunas, char tabuleiro[15][24], char tabuleiroGU
                                 if (tabuleiroGUI[ltemp][ctemp] != 45 && tabuleiroGUI[ltemp][ctemp] != 0){
                                     for ( m = -1; m <=1; m++){
                                         for ( n = -1; n <= 1; n++){
-                                            if (tabuleiroGUI[ltemp+m][ctemp+n]==0 && ltemp<15 && ctemp<24){
+                                            if (tabuleiroGUI[ltemp+m][ctemp+n]==0 && (ltemp+m)<=15 && (ltemp+m)>=0 && (ctemp+n)<=24 && (ctemp+n)>=0){
                                                 tabuleiroGUI[ltemp+m][ctemp+n]=45;
                                             }   
                                         }
@@ -379,7 +419,7 @@ void modoTiro3(int linhas, int colunas, char tabuleiro[15][24], char tabuleiroGU
                                 }
                             }
                         }
-                    mostratabuleiro(linhas,colunas,tabuleiroGUI);
+                    mostratabuleiro(linhas,colunas,tabuleiroGUI,pecas);
                     break;
                     }
                 }
@@ -397,7 +437,9 @@ int main(int argc, char *argv[]){
         modoJogo=0,
         modoPosicionamento=1,
         modoDisparo=1,
-        pecas[8]={0};
+        pecas[8]={0,0,0,0,0,0,0,0},
+        count=0,
+        nmrPecas=0;
 
     opterr = 0;
     while ((opt = getopt(argc, argv, "ht:j:p:d:1:2:3:4:5:6:7:8:")) != -1) {
@@ -479,7 +521,26 @@ int main(int argc, char *argv[]){
             }
         } 
 
-    printf("%d %d %d %d %d \n",linhas,colunas,modoJogo,modoPosicionamento,modoDisparo);
+    for (count = 0; count < 7; count++){                    //restição 3 e 4
+        if (pecas[count]<pecas[count+1]){
+            printf("Erro de introducao, valores inválidos para pecas\n\n");
+            textoAjuda();
+            exit(0);
+        }
+
+        nmrPecas=nmrPecas+pecas[count];
+        if (count==6){
+            nmrPecas=nmrPecas+pecas[count+1];
+        }
+        
+        if (nmrPecas>((linhas*colunas/9)/2)){
+            printf("Erro de introducao, valores inválidos para pecas\n\n");
+            textoAjuda();
+            exit(0);
+        }
+    }
+
+
 
     if ((modoJogo != 2) && (modoDisparo !=1))
         {
@@ -488,10 +549,10 @@ int main(int argc, char *argv[]){
         }
 
 
-    mostratabuleiro(linhas,colunas,tabuleiro);
-    modoPos1(linhas,colunas,tabuleiro,biblio);
-    mostratabuleiro(linhas,colunas,tabuleiro);
-    mostratabuleiro(linhas,colunas,tabuleiroGUI);
-    modoTiro3(linhas,colunas,tabuleiro,tabuleiroGUI);
+
+
+    modoPos2(pecas,linhas,colunas,nmrPecas,tabuleiro);
+    mostratabuleiro(linhas,colunas,tabuleiro,pecas);
+    modoTiro3(linhas,colunas,tabuleiro,tabuleiroGUI,pecas);
     return 0;
 };
