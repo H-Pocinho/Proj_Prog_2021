@@ -137,7 +137,7 @@ int restricaoUm(int l, int c,char tabuleiro[15][24]){
                             ltemp = m+i;
                             ctemp = n+j;
 
-                           if ( ((ltemp < l) || (ltemp > (l+2))) || ((ctemp < c) || (ctemp > (c+2))))
+                           if ( ((ltemp < l) || (ltemp > (l+2))) || ((ctemp < c) || (ctemp > (c+2))) && ((ltemp+m)<=15 && (ltemp+m)>=0 && (ctemp+n)<=24 && (ctemp+n)>=0))
                            {
                                if (tabuleiro[ltemp][ctemp] != 45 && tabuleiro[ltemp][ctemp] != 0)
                                {
@@ -428,6 +428,11 @@ void modoTiro3(int linhas, int colunas, char tabuleiro[15][24], char tabuleiroGU
     }
 };
 
+void modoJogo1(){}
+
+
+
+
 int main(int argc, char *argv[]){
 
     srand(time(NULL));
@@ -450,7 +455,8 @@ int main(int argc, char *argv[]){
                 if (((linhas < 9) || (linhas>15)) || ((colunas < 9) || (colunas>24)) || ((colunas%3 != 0) || (linhas%3 != 0))){
                     printf("Valores inválidos para o tamanho, por favor tente de novo\n");
                     printf("Utilize 9, 12 ou 15 para linhas e 9, 12, 15, 18, 21 ou 24 para colunas\n");
-                    exit(0);
+                    textoAjuda();
+                    return -1;
                 }    
             break;
 
@@ -459,7 +465,8 @@ int main(int argc, char *argv[]){
                 if (modoJogo<0 || modoJogo>2){
                     printf("Valores inválidos para o modo de jogo, por favor tente de novo\n");
                     printf("Utilize um numero entre 0 e 2\n");
-                    exit(0);
+                    textoAjuda();
+                    return -1;
                 }
             break;
 
@@ -468,7 +475,8 @@ int main(int argc, char *argv[]){
                 if (modoPosicionamento<1 || modoPosicionamento>2){
                     printf("Valores inválidos para o modo de posicionamento, por favor tente de novo\n");
                     printf("Utilize um numero entre 1 e 2\n");
-                    exit(0);
+                    textoAjuda();
+                    return -1;
                 }
             break;
 
@@ -477,7 +485,12 @@ int main(int argc, char *argv[]){
                 if (modoDisparo<1 || modoDisparo>3){
                     printf("Valores inválidos para o modo de disparo, por favor tente de novo\n");
                     printf("Utilize um numero entre 1 e 3\n");
-                    exit(0);
+                    textoAjuda();
+                    return -1;
+                }
+                if ((modoJogo != 2)){
+                    textoAjuda();
+                    return -1;
                 }
             break;
             
@@ -515,17 +528,25 @@ int main(int argc, char *argv[]){
 
             default:
                 printf("Erro de introducao, opcao desconhecida\n\n");
+                textoAjuda();
+                return -1;
             case 'h':
                 textoAjuda();
             break;
             }
         } 
 
+
+    if ((modoJogo != 2) && (modoDisparo !=1)){
+        textoAjuda();
+        return -1;
+    }
+
+
     for (count = 0; count < 7; count++){                    //restição 3 e 4
         if (pecas[count]<pecas[count+1]){
-            printf("Erro de introducao, valores inválidos para pecas\n\n");
             textoAjuda();
-            exit(0);
+            return -1;
         }
 
         nmrPecas=nmrPecas+pecas[count];
@@ -534,25 +555,31 @@ int main(int argc, char *argv[]){
         }
         
         if (nmrPecas>((linhas*colunas/9)/2)){
-            printf("Erro de introducao, valores inválidos para pecas\n\n");
             textoAjuda();
-            exit(0);
+            return -1;
         }
     }
 
+    if (modoPosicionamento==1 && pecas[0]!=0)
+    {
+        textoAjuda();
+        return -1;
+    }
+    
+    switch (modoJogo)
+    {
+    case 0:
 
+    break;
+    
+    case 1:
+        
+    break;
 
-    if ((modoJogo != 2) && (modoDisparo !=1))
-        {
-            textoAjuda();
-            exit(0);
-        }
+    case 2:
 
+    break;
+    }
 
-
-
-    modoPos2(pecas,linhas,colunas,nmrPecas,tabuleiro);
-    mostratabuleiro(linhas,colunas,tabuleiro,pecas);
-    modoTiro3(linhas,colunas,tabuleiro,tabuleiroGUI,pecas);
     return 0;
 };
