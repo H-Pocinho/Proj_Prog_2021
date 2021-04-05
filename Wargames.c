@@ -457,6 +457,7 @@ int main(int argc, char *argv[]){
                     printf("Valores inválidos para o tamanho, por favor tente de novo\n");
                     printf("Utilize 9, 12 ou 15 para linhas e 9, 12, 15, 18, 21 ou 24 para colunas\n");
                     textoAjuda();
+                    printf("-1");
                     return -1;
                 }    
             break;
@@ -467,6 +468,7 @@ int main(int argc, char *argv[]){
                     printf("Valores inválidos para o modo de jogo, por favor tente de novo\n");
                     printf("Utilize um numero entre 0 e 2\n");
                     textoAjuda();
+                    printf("-1");
                     return -1;
                 }
             break;
@@ -477,6 +479,7 @@ int main(int argc, char *argv[]){
                     printf("Valores inválidos para o modo de posicionamento, por favor tente de novo\n");
                     printf("Utilize um numero entre 1 e 2\n");
                     textoAjuda();
+                    printf("-1");
                     return -1;
                 }
             break;
@@ -488,6 +491,7 @@ int main(int argc, char *argv[]){
                     printf("Valores inválidos para o modo de disparo, por favor tente de novo\n");
                     printf("Utilize um numero entre 1 e 3\n");
                     textoAjuda();
+                    printf("-1");
                     return -1;
                 }
             break;
@@ -527,6 +531,7 @@ int main(int argc, char *argv[]){
             default:
                 printf("Erro de introducao, opcao desconhecida\n\n");
                 textoAjuda();
+                printf("-1");
                 return -1;
             case 'h':
                 textoAjuda();
@@ -537,6 +542,7 @@ int main(int argc, char *argv[]){
 
     if ((modoJogo != 2) && (flagAlterado !=0)){
         textoAjuda();
+        printf("-1");
         return -1;
     }
 
@@ -544,6 +550,7 @@ int main(int argc, char *argv[]){
     for (count = 0; count < 7; count++){                    //restição 3 e 4
         if (pecas[count]<pecas[count+1]){
             textoAjuda();
+            printf("-1");
             return -1;
         }
 
@@ -554,6 +561,7 @@ int main(int argc, char *argv[]){
         
         if (nmrPecas>((linhas*colunas/9)/2)){
             textoAjuda();
+            printf("-1");
             return -1;
         }
     }
@@ -561,6 +569,7 @@ int main(int argc, char *argv[]){
     if (modoPosicionamento==1 && pecas[0]!=0)
     {
         textoAjuda();
+        printf("-1");
         return -1;
     }
     
@@ -580,5 +589,6 @@ int main(int argc, char *argv[]){
     }
 
     textoAjuda();
+    printf("-1");
     return -1;
 };
