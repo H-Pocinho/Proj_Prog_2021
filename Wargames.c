@@ -444,7 +444,8 @@ int main(int argc, char *argv[]){
         modoDisparo=1,
         pecas[8]={0,0,0,0,0,0,0,0},
         count=0,
-        nmrPecas=0;
+        nmrPecas=0,
+        flagAlterado=0;
 
     opterr = 0;
     while ((opt = getopt(argc, argv, "ht:j:p:d:1:2:3:4:5:6:7:8:")) != -1) {
@@ -482,13 +483,10 @@ int main(int argc, char *argv[]){
 
             case 'd':
                 sscanf(optarg, "%d", &modoDisparo);
+                flagAlterado=1;
                 if (modoDisparo<1 || modoDisparo>3){
                     printf("Valores inválidos para o modo de disparo, por favor tente de novo\n");
                     printf("Utilize um numero entre 1 e 3\n");
-                    textoAjuda();
-                    return -1;
-                }
-                if ((modoJogo != 2)){
                     textoAjuda();
                     return -1;
                 }
@@ -537,7 +535,7 @@ int main(int argc, char *argv[]){
         } 
 
 
-    if ((modoJogo != 2) && (modoDisparo !=1)){
+    if ((modoJogo != 2) && (flagAlterado !=0)){
         textoAjuda();
         return -1;
     }
@@ -581,5 +579,6 @@ int main(int argc, char *argv[]){
     break;
     }
 
-    return 0;
+    textoAjuda();
+    return -1;
 };
