@@ -375,6 +375,7 @@ void modoJogo1(int modoPosicionamento, int pecas[], int linhas, int colunas, int
             while (scanf("%c%d", &c,&l) != 2){
                 printf("*Failled to read STDIN!\n");
                 printf("*Introduza novamente");
+                fflush(stdin);
             }
             fflush(stdin);
             
