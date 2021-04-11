@@ -273,8 +273,8 @@ void modoTiro1(int linhas, int colunas, char tabuleiro[15][24], char tabuleiroGU
             }while(tabuleiroGUI[tiroL][tiroC]!=0);
             printf("%c%d",tiroL+65,tiroC+1);
             scanf("%c",&tiro);
-            tabuleiroGUI[tiroL][tiroC]=tabuleiro[tiroL][tiroC];
-                if (tabuleiro[tiroL][tiroC]!=45){
+            tabuleiroGUI[tiroL][tiroC]=tiro;
+                if (tabuleiroGUI[tiroL][tiroC]!=45&&tabuleiroGUI[tiroL][tiroC]!=0){
                     nmrpecas--;
                 }
         } while (nmrpecas!=0);
