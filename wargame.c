@@ -371,8 +371,7 @@ void modoJogo0(int modoPosicionamento, int pecas[], int linhas, int colunas, int
 
 void modoJogo1(int modoPosicionamento, int pecas[], int linhas, int colunas, int nmrPecas, char tabuleiro[][24], char tabuleiroGUI[][24], char biblio[43][3][3],int inicioPecas[9]){
     int i,j,l,nmrJogadas=0,nmrCasasOcupadas=0;
-    clock_t t;
-    double tempo;
+    time_t t;
     char c;
 
 
@@ -400,12 +399,12 @@ void modoJogo1(int modoPosicionamento, int pecas[], int linhas, int colunas, int
 
         }
     }
-    t = clock();
+    t = time(NULL);
     while (nmrCasasOcupadas>0){
         do{
             while (scanf("%c%d", &c,&l) != 2){
                 printf("*Failled to read STDIN!\n");
-                printf("*Introduza novamente");
+                printf("*Introduza novamente\n");
                 limpaStdin();
             }
             limpaStdin();
@@ -420,8 +419,7 @@ void modoJogo1(int modoPosicionamento, int pecas[], int linhas, int colunas, int
         }
         printf("%c\n",tabuleiroGUI[linhas-l-2][c-17]);
     }
-    t = clock() - t;
-    //tempo = ((double)t)/CLOCKS_PER_SEC;
+    t = time(NULL) - t;
     mostratabuleiro(linhas,colunas,tabuleiro,pecas);
     printf("Fim de jogo: %d jogadas em %lf segundos\n",nmrJogadas,(double)t);
 }
@@ -436,7 +434,6 @@ case 2:
     break;
 
 case 3:
-    /* code */
     break;
 
 
@@ -555,14 +552,12 @@ int main(int argc, char *argv[]){
         count=0,
         nmrPecas=0,
         flagMDAlterado=0,
-        flagTAlterado=0;
 
     opterr = 0;
     while ((opt = getopt(argc, argv, "ht:j:p:d:1:2:3:4:5:6:7:8:")) != -1) {
             switch (opt)
             {
             case 't':
-            flagTAlterado=1;
                 if (sscanf(optarg, "%dx%d", &linhas, &colunas) != 2){
                     printf("Failled to read STDIN!\n");
                     exit(0);
@@ -726,30 +721,18 @@ int main(int argc, char *argv[]){
     switch (modoJogo)
     {
     case 0:
-        if (flagTAlterado!=1){
-            printf("Especifique o tamanho do tabuleiro");
-            textoAjuda();
-            printf("-1");
-            return -1;
-        }
         modoJogo0(modoPosicionamento,pecas,linhas,colunas,nmrPecas,tabuleiro,tabuleiroGUI,biblio,inicioPecas);
-        exit(0);
+        return 1;
     break;
 
     case 1:
-        if (flagTAlterado!=1){
-            printf("Especifique o tamanho do tabuleiro");
-            textoAjuda();
-            printf("-1");
-            return -1;
-        }
         modoJogo1(modoPosicionamento,pecas,linhas,colunas,nmrPecas,tabuleiro,tabuleiroGUI,biblio,inicioPecas);
-        exit(0);
+        return 1;
     break;
 
     case 2:
         modoJogo2(modoDisparo,pecas,linhas,colunas,nmrPecas,tabuleiro,tabuleiroGUI,biblio,inicioPecas);
-        exit(0);
+        return 1;
     break;
     }
 
