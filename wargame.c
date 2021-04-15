@@ -291,7 +291,7 @@ void modoTiro1(int linhas, int colunas, char tabuleiro[15][24],int pecas[8]){
     }
     
     
-    printf("Fim de jogo: %d jogadas em %lf segundos\n",nmrjogadas,(double)t);
+    printf("Fim de jogo: %d jogadas em %d segundos\n",nmrjogadas,(int)t);
     mostratabuleiro(linhas,colunas,tabuleiro,pecas);
 };
 
@@ -336,7 +336,7 @@ void modoTiro2(int linhas, int colunas,int nmrPecas, char tabuleiro[15][24],int 
         }
     }
     t = time(NULL) - t;
-    printf("Fim de jogo: %d jogadas em %lf segundos\n",nmrjogadas,(double)t);
+    printf("Fim de jogo: %d jogadas em %d segundos\n",nmrjogadas,(int)t);
     mostratabuleiro(linhas,colunas,tabuleiro,pecas);
 };
 
@@ -404,7 +404,7 @@ void modoTiro3(int linhas, int colunas,int nmrPecas, char tabuleiro[15][24],int 
             }
         }
     }
-    printf("Fim de jogo: %d jogadas em %lf segundos\n",nmrjogadas,(double)t);
+    printf("Fim de jogo: %d jogadas em %d segundos\n",nmrjogadas,(int)t);
     mostratabuleiro(linhas,colunas,tabuleiro,pecas);
 };
 
@@ -432,7 +432,7 @@ void modoJogo1(int modoPosicionamento, int pecas[], int linhas, int colunas, int
     char posicoes[15][24]={0};
     time_t t;
     char c;
-
+ 
     switch (modoPosicionamento)
     {
     case 1:
@@ -446,6 +446,8 @@ void modoJogo1(int modoPosicionamento, int pecas[], int linhas, int colunas, int
         }
         break;
     }
+
+
     printf("%dx%d %d %d %d %d %d %d %d %d\n",linhas,colunas,pecas[0],pecas[1],pecas[2],pecas[3],pecas[4],pecas[5],pecas[6],pecas[7]);
 
     for (i = 0; i<linhas; i++){
@@ -469,17 +471,16 @@ void modoJogo1(int modoPosicionamento, int pecas[], int linhas, int colunas, int
         } while (l>linhas||l<1||c<65||c>(colunas+64));
         nmrJogadas++;
 
-        if (posicoes[linhas-l-2][c-17]==0){
-            posicoes[linhas-l-2][c-17]=1;
-            if (tabuleiro[linhas-l-2][c-17]!=45){
+        if (posicoes[linhas-l][c-65]==0){
+            posicoes[linhas-l][c-65]=1;
+            if (tabuleiro[linhas-l][c-65]!=45){
                nmrCasasOcupadas--;
             }
         }
-        printf("%c\n",tabuleiro[linhas-l-2][c-17]);        
-
+        printf("%c\n",tabuleiro[linhas-l][c-65]);  
     }
     t = time(NULL) - t;
-    printf("Fim de jogo: %d jogadas em %lf segundos\n",nmrJogadas,(double)t);
+    printf("Fim de jogo: %d jogadas em %d segundos\n",nmrJogadas,(int)t);
 }
 
 void modoJogo2(int modoDisparo, int pecas[], int linhas, int colunas, int nmrPecas, char tabuleiro[15][24]){
@@ -756,6 +757,8 @@ int main(int argc, char *argv[]){
         printf("-1");
         return -1;
     }*/
+
+
 
     switch (modoJogo)
     {
