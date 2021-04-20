@@ -1,11 +1,9 @@
-22/03
-Adicinei a função que permite o input pela linha de comandos usando a funçãõ getops , falta elaborar as opções
-24/03
-Alteração da estrutura das peças (passou de vetores para matrizes) todas as opções de entradas feitas, faltam as excepções
-29/3
-função que mostra o tabuleiro finalizada
-FEITO DCARALHO A MERDA FA FUNÇAO DA RESTRIÇÂO
-30/3
-Função tiro 1
-31/3
-função tiro 2
+﻿-Temos um array 15 por 24 de chars que é o tabuleiro, o tabuleiro está inicializado com tudo a 45 ou seja '-'
+
+-Para as peças temos um array de 43 por 3 por 3 que guarda a totalidade das peças, sendo que a posição 0 do array é a peça vazia
+
+-Logo isso permite chamar as peças pelo seu identificador global (IG) da seguinte maneira biblio[IG][0][0] (canto superior esquerdo da peça definida por IG)
+
+-Para chamar as peças por indentificador de peça (IP) e identificador de variante (IV) temos um outro array de 9 chamado inicioPecas que contem a posição inicial de cada uma dos tipos de peça
+
+-Sendo assim para chamar a peça usando o IP e IV temos que biblio[inicioPeca[IP]+IV-1][0][0]

@@ -444,7 +444,6 @@ void modoTiro3(int linhas, int colunas,int nmrPecas, char tabuleiro[15][24],int 
                 printf("%c%d\n",j+ordemTiro[posicaoTiro][1]+65,linhas-ordemTiro[posicaoTiro][0]-i);
                 scanf("%c",&tiro);
                 limpaStdin();
-                limpaStdin();
                 nmrjogadas++;
                 tabuleiro[i+ordemTiro[posicaoTiro][0]][j+ordemTiro[posicaoTiro][1]]=tiro; 
                 if(tiro != 45){
@@ -537,7 +536,23 @@ void modoJogo0(int modoPosicionamento, int pecas[], int linhas, int colunas, int
 
 void modoJogo1(int modoPosicionamento, int pecas[], int linhas, int colunas, int nmrPecas, char tabuleiro[][24], char biblio[43][3][3],int inicioPecas[9]){
     int i,j,l,nmrJogadas=0,nmrCasasOcupadas=0;
-    char posicoes[15][24];
+    char posicoes[15][24]={
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}
+    };
     time_t t; //Inicia o timer
     char c;
  
