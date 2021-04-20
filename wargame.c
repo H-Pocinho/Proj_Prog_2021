@@ -14,7 +14,7 @@ Wargame
 #include <time.h>
 
 
-
+//Texto de ajuda
 void textoAjuda(){
     printf("\nBem-vindo ao WarGames\n");
     printf("Projecto de Prog feito por:\n");
@@ -34,25 +34,25 @@ void limpaStdin(void){
         c = getchar();
     } while (c != '\n' && c != EOF);
 }
-
+//Função que deteta se verifica se o tabuleiro cumpre a restrição 1
 int restricaoUm(int l, int c,char tabuleiro[15][24]){
     int i,j,m,n,ltemp,ctemp;
-        for ( i = l; i < (l+3); i++)
+        for ( i = l; i < (l+3); i++) //Seleciona a peça na horizontal
         {
-            for (j = c; j < (c+3); j++)
+            for (j = c; j < (c+3); j++) //seleciona a peça na vertical
             {
-                if (tabuleiro[i][j] != 45)
+                if (tabuleiro[i][j] != 45) //Vê se a peça não é um "-"
                 {
-                    for ( m = -1; m <=1; m++)
+                    for ( m = -1; m <=1; m++) //Vai estudar peça a peça(horizontal)
                     {
-                        for ( n = -1; n <= 1; n++)
+                        for ( n = -1; n <= 1; n++) //Vai estudar a peça(vertical)
                         {
                             ltemp = m+i;
                             ctemp = n+j;
 
                            if ( (((ltemp < l) || (ltemp > (l+3))) || ((ctemp < c) || (ctemp > (c+3)))) && (((ltemp)<15 && (ltemp)>=0) && ((ctemp)<24 && (ctemp)>=0)))
                            {
-                               if (tabuleiro[ltemp][ctemp] != 45 && tabuleiro[ltemp][ctemp] != 0)
+                               if (tabuleiro[ltemp][ctemp] != 45 && tabuleiro[ltemp][ctemp] != 0) //O que faz a verificação
                                {
                                    return 1;
                                }
@@ -64,12 +64,12 @@ int restricaoUm(int l, int c,char tabuleiro[15][24]){
         }
     return 0;
 };
-
+//Função que representa o tabuleiro
 void mostratabuleiro(int linhas, int colunas,char tabuleiro[15][24],int pecas[8]){
     int i, j,nmr;
     char letras [24] = {"ABCDEFGHIJKLMNOPQRSTUVWX"};
-    for (i = 0; i<linhas; i++){
-        for (j = 0; j<colunas; j++){
+    for (i = 0; i<linhas; i++){ //Altera a linha
+        for (j = 0; j<colunas; j++){ //Altera a coluna
             if (j==0){
                 nmr=linhas-i;
                 if (nmr<10){
@@ -79,7 +79,7 @@ void mostratabuleiro(int linhas, int colunas,char tabuleiro[15][24],int pecas[8]
                     printf("%d ",nmr);
                 }
             }
-            printf("%c ", tabuleiro[i][j]);
+            printf("%c ", tabuleiro[i][j]); //Print do valor da coordenada selecionada
         }
         printf("\n");
     }
@@ -89,26 +89,26 @@ void mostratabuleiro(int linhas, int colunas,char tabuleiro[15][24],int pecas[8]
     }
     printf("\n");
 };
-
+//Função que chama o modo de posicionamento 1
 void modoPos1(int linhas,int colunas, char tabuleiro[][24],int pecas[], char biblio[43][3][3]){
     int i,j,m,n,tipoPeca,pecaRandom,try;
-    for (i = 0; i < linhas; i=i+3){
-        for ( j = 0; j < colunas; j=j+3){
+    for (i = 0; i < linhas; i=i+3){  //altera a peça na horizontal
+        for ( j = 0; j < colunas; j=j+3){ //altera a peça na vertical
             try=0;
             do{
 
-                pecaRandom=((rand()%43));
+                pecaRandom=((rand()%43)); //seleciona uma peça da biblioteca de peças aleatoriamente
 
-                for ( m = 0; m < 3 ; m++){
-                    for (n = 0; n < 3; n++){
+                for ( m = 0; m < 3 ; m++){ //altera a coluna
+                    for (n = 0; n < 3; n++){ //altera a linha
 
-                        tabuleiro[(m+i)][(n+j)]=biblio[0][m][n];
+                        tabuleiro[(m+i)][(n+j)]=biblio[0][m][n]; //Isto aqui não é trivial?
                     }
                 }
 
                 for ( m = 0; m < 3 ; m++){
                     for (n = 0; n < 3; n++){
-                        tabuleiro[(m+i)][(n+j)]=biblio[pecaRandom][m][n];
+                        tabuleiro[(m+i)][(n+j)]=biblio[pecaRandom][m][n]; //Print da coordenada da peça com o valor da coordenada da peça selecionada
                     }
                 }
 
@@ -119,9 +119,9 @@ void modoPos1(int linhas,int colunas, char tabuleiro[][24],int pecas[], char bib
                             tabuleiro[(m+i)][(n+j)]=biblio[5][m][n];
                         }
                     }
-                }
+                }//Se a peça não for colocada nas 3 tentativas, selecionar a peça No 5 da biblioteca
                 try=try+1;
-            } while (restricaoUm(i,j,tabuleiro) != 0);
+            } while (restricaoUm(i,j,tabuleiro) != 0); //Restrição 1
         }
     }
 
@@ -132,7 +132,7 @@ void modoPos1(int linhas,int colunas, char tabuleiro[][24],int pecas[], char bib
                     tipoPeca=(int)tabuleiro[(m+i)][(n+j)];
                     if (tipoPeca!=45){
                         pecas[tipoPeca - 49]=pecas[tipoPeca - 49]+1;
-                    }
+                    } //Obter a quantidade de cada peça utilizada
                 }
             }
         }
@@ -140,7 +140,7 @@ void modoPos1(int linhas,int colunas, char tabuleiro[][24],int pecas[], char bib
 
     for ( i = 0; i < 8; i++){
         pecas[i]=pecas[i]/(i+1);
-    }
+    }  //Guardar a quantidade de cada peça utilizada
 
 };
 
@@ -148,7 +148,7 @@ int modoPos2(int pecas[8], int linhas, int colunas, int nmrPecas, char tabuleiro
     int i,j,m,n,l;
     int tipoPeca,variantePeca,posicaoVariante,cnt8tentativas=0,flagPecaUsada,cnt1000=0;
     int pecasUsadas[8]={9,9,9,9,9,9,9,9};
-    int nmrTotal= (linhas*colunas)/9;
+    int nmrTotal= (linhas*colunas)/9; 
     int nmrVazias = nmrTotal-nmrPecas;
     int quantidadePecas[9]={nmrVazias,pecas[0],pecas[1],pecas[2],pecas[3],pecas[4],pecas[5],pecas[6],pecas[7]};
     do{
@@ -156,24 +156,24 @@ int modoPos2(int pecas[8], int linhas, int colunas, int nmrPecas, char tabuleiro
             for (j = 0; j<colunas; j++){
                 tabuleiro[i][j]=45;
             }
-        }
+        } //dar set ao tabuleiro
         nmrTotal= (linhas*colunas)/9;
         for ( l = 0; l < 9; l++){
             if (l==0){
-                quantidadePecas[l]=nmrVazias;
+                quantidadePecas[l]=nmrVazias; //Quantidade de peças vazias
             }
             else{
-                quantidadePecas[l]=pecas[l-1];
+                quantidadePecas[l]=pecas[l-1]; //Quantidade de peças com valor
             }
         }
 
-        for (i = 0; i < linhas; i=i+3){
-            for ( j = 0; j < colunas; j=j+3){
+        for (i = 0; i < linhas; i=i+3){ 
+            for ( j = 0; j < colunas; j=j+3){ //seleciona uma peça 3x3
                 cnt8tentativas=0;
                 do{
                     do{
                         flagPecaUsada=0;
-                        tipoPeca=rand() % 9;
+                        tipoPeca=rand() % 9; //Seleciona uma dos 9 tipos de peças disponiveis (A peça vazia está incluida)
                         for (l = 0; l < 8; l++){
                             if (tipoPeca==pecasUsadas[l]){
                                 flagPecaUsada=1;
@@ -181,7 +181,7 @@ int modoPos2(int pecas[8], int linhas, int colunas, int nmrPecas, char tabuleiro
                         }
                         if (flagPecaUsada==1){
                             continue;
-                        }
+                        } //verificar se a peça já foi usada
                     } while (quantidadePecas[tipoPeca]<=0);
 
 
@@ -194,11 +194,11 @@ int modoPos2(int pecas[8], int linhas, int colunas, int nmrPecas, char tabuleiro
 
                     for ( m = 0; m < 3 ; m++){
                         for (n = 0; n < 3; n++){
-                            tabuleiro[(m+i)][(n+j)]=biblio[variantePeca][m][n];
+                            tabuleiro[(m+i)][(n+j)]=biblio[variantePeca][m][n]; //Substitui a coordenada pelo valor da peça escolhida
                         }
                     }
 
-                    if (restricaoUm(i,j,tabuleiro) == 0){
+                    if (restricaoUm(i,j,tabuleiro) == 0){ //Caso cumpra a restrição 1
                         quantidadePecas[tipoPeca]--;
                         nmrTotal--;
                         break;
@@ -237,7 +237,7 @@ int modoPos2(int pecas[8], int linhas, int colunas, int nmrPecas, char tabuleiro
                     return 1;
                 }
                 if (cnt8tentativas==8){
-                    cnt1000++;
+                    cnt1000++; //Adiciona ao counter e quando chegar ao 1000, dá return -1
                     break;
                 }
             }
@@ -263,21 +263,21 @@ void modoTiro1(int linhas, int colunas, char tabuleiro[15][24],int pecas[8]){
     t = time(NULL);
     do{
        do{
-            tiroL=(rand() % linhas);
-            tiroC=(rand() % colunas);
+            tiroL=(rand() % linhas); //Seleciona uma linha aleatoria
+            tiroC=(rand() % colunas); //seleciona uma coluna aleatoria
         }while( tabuleiro[linhas-1-tiroL][tiroC] != 45);
         nmrjogadas=nmrjogadas+1;
         printf("%c%d\n",tiroC+65,tiroL+1);
         scanf("%c",&tiro);
         limpaStdin();
-        if (tiro!='-')
+        if (tiro!='-') //se o alvo for diferente de '-'
         {
             tabuleiro[linhas-1-tiroL][tiroC]=tiro;
-            nmrpecas--;
+            nmrpecas--; //Retirar 1 ao numero de peças
         }else{
-            tabuleiro[linhas-1-tiroL][tiroC] = 'x';
+            tabuleiro[linhas-1-tiroL][tiroC] = 'x'; 
         }
-    } while (nmrpecas>0);
+    } while (nmrpecas>0); 
     t = time(NULL) - t;
     for ( i = 0; i < linhas; i++)
     {
@@ -407,33 +407,33 @@ void modoTiro3(int linhas, int colunas,int nmrPecas, char tabuleiro[15][24],int 
     printf("Fim de jogo: %d jogadas em %d segundos\n",nmrjogadas,(int)t);
     mostratabuleiro(linhas,colunas,tabuleiro,pecas);
 };
-
+//Função do modo de jogo 0
 void modoJogo0(int modoPosicionamento, int pecas[], int linhas, int colunas, int nmrPecas, char tabuleiro[][24], char biblio[43][3][3],int inicioPecas[9]){
 
-    switch (modoPosicionamento){
+    switch (modoPosicionamento){ //Selecionar o modo de posicionamento
 
     case 2:
 
-        if(modoPos2(pecas,linhas,colunas,nmrPecas,tabuleiro,biblio,inicioPecas)==-1){
+        if(modoPos2(pecas,linhas,colunas,nmrPecas,tabuleiro,biblio,inicioPecas)==-1){ //Impossivel gerar o tabuleiro devido ao numero de resets
             printf("Tabuleiro impossivel de ser gerado");
             exit(0);
         }
         break;
 
     default:
-        modoPos1(linhas,colunas,tabuleiro,pecas,biblio);
+        modoPos1(linhas,colunas,tabuleiro,pecas,biblio); //modo de posicionamento 1
         break;
     }
-    mostratabuleiro(linhas,colunas,tabuleiro,pecas);
+    mostratabuleiro(linhas,colunas,tabuleiro,pecas); //Função que dá print ao tabuleiro
 }
 
 void modoJogo1(int modoPosicionamento, int pecas[], int linhas, int colunas, int nmrPecas, char tabuleiro[][24], char biblio[43][3][3],int inicioPecas[9]){
     int i,j,l,nmrJogadas=0,nmrCasasOcupadas=0;
     char posicoes[15][24]={0};
-    time_t t;
+    time_t t; //Inicia o timer
     char c;
  
-    switch (modoPosicionamento)
+    switch (modoPosicionamento) //Selecionar o modo de posicionamento
     {
     case 1:
         modoPos1(linhas,colunas,tabuleiro,pecas,biblio);
@@ -448,7 +448,7 @@ void modoJogo1(int modoPosicionamento, int pecas[], int linhas, int colunas, int
     }
 
 
-    printf("%dx%d %d %d %d %d %d %d %d %d\n",linhas,colunas,pecas[0],pecas[1],pecas[2],pecas[3],pecas[4],pecas[5],pecas[6],pecas[7]);
+    printf("%dx%d %d %d %d %d %d %d %d %d\n",linhas,colunas,pecas[0],pecas[1],pecas[2],pecas[3],pecas[4],pecas[5],pecas[6],pecas[7]); //Print ao numero de peças de cada tipo
 
     for (i = 0; i<linhas; i++){
         for (j = 0; j<colunas; j++){
@@ -458,9 +458,9 @@ void modoJogo1(int modoPosicionamento, int pecas[], int linhas, int colunas, int
             }
 
         }
-    }
+    } //conta o numero de casas ocupadas
     t = time(NULL);
-    while (nmrCasasOcupadas>0){
+    while (nmrCasasOcupadas>0){ //Disparar numa peça
         do{
             while (scanf("%c%d", &c,&l) != 2){
                 printf("*Failled to read STDIN!\n");
@@ -472,14 +472,14 @@ void modoJogo1(int modoPosicionamento, int pecas[], int linhas, int colunas, int
         nmrJogadas++;
 
         if (posicoes[linhas-l][c-65]==0){
-            posicoes[linhas-l][c-65]=1;
+            posicoes[linhas-l][c-65]=1; //Mudar o valor da peça selecionada
             if (tabuleiro[linhas-l][c-65]!=45){
-               nmrCasasOcupadas--;
+               nmrCasasOcupadas--; //Caso acerte uma peça, retirar um da quantidade contada
             }
         }
         printf("%c\n",tabuleiro[linhas-l][c-65]);  
     }
-    t = time(NULL) - t;
+    t = time(NULL) - t; //termina a contagem do programa
     printf("Fim de jogo: %d jogadas em %d segundos\n",nmrJogadas,(int)t);
 }
 
@@ -508,7 +508,7 @@ default:
 int main(int argc, char *argv[]){
 
     srand(time(NULL));
-
+    //Valores do Tabuleiro
     char tabuleiro[15][24] = {
         {45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45},
         {45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45},
@@ -527,7 +527,7 @@ int main(int argc, char *argv[]){
         {45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45}
     };
 
-
+    //biblioteca das peças
     char biblio[43][3][3] = {
         {{45,45,45},{45,45,45},{45,45,45}},
 
@@ -759,7 +759,7 @@ int main(int argc, char *argv[]){
     }*/
 
 
-
+    //selecionar o modo de jogo
     switch (modoJogo)
     {
     case 0:
