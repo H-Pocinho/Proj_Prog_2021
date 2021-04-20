@@ -14,7 +14,12 @@ Wargame
 #include <time.h>
 
 
-//Texto de ajuda
+/*
+*Nome da funcao: textoAjuda
+*
+*Objetivo da funcao: Imprime o texto de ajuda em caso de erro
+*/
+
 void textoAjuda(){
     printf("\nBem-vindo ao WarGames\n");
     printf("Projecto de Prog feito por:\n");
@@ -28,13 +33,33 @@ void textoAjuda(){
     printf("-Y X : y e um numero entre 1 e 8 que representa uma das pecas, e X e o numero dessas pecas que existem.\n");
 };
 
-void limpaStdin(void){
+
+
+/*
+*Nome da funcao: limpaStdin
+*
+*Objetivo da funcao: Limpa o standard input para não haver erros ou problemas durante a introdução de coordenadas
+*/
+
+void limpaStdin(){
     int c;
     do {
         c = getchar();
     } while (c != '\n' && c != EOF);
 }
-//Função que deteta se verifica se o tabuleiro cumpre a restrição 1
+
+
+
+/*
+*Nome da funcao: restricaoUm
+*
+*Objetivo da funcao: Aplica a restrição 1
+*
+*Argumentos de entrada: l e c (linha e coluna ou seja a posição inicial da quadrivcula em que se vai verificar a restrição) e o tabuleiro
+*
+*Argumentos de saida: 1 caso a restrição não se verifique e 0 caso se verifique
+*/
+
 int restricaoUm(int l, int c,char tabuleiro[15][24]){
     int i,j,m,n,ltemp,ctemp;
         for ( i = l; i < (l+3); i++) //Seleciona a peça na horizontal
@@ -43,16 +68,16 @@ int restricaoUm(int l, int c,char tabuleiro[15][24]){
             {
                 if (tabuleiro[i][j] != 45) //Vê se a peça não é um "-"
                 {
-                    for ( m = -1; m <=1; m++) //Vai estudar peça a peça(horizontal)
+                    for ( m = -1; m <=1; m++) //Vai estudar a quadricula cirncundante peça a peça(horizontal)
                     {
-                        for ( n = -1; n <= 1; n++) //Vai estudar a peça(vertical)
+                        for ( n = -1; n <= 1; n++) //Vai estudar a quadricula cirncundante (vertical)
                         {
                             ltemp = m+i;
                             ctemp = n+j;
 
-                           if ( (((ltemp < l) || (ltemp > (l+3))) || ((ctemp < c) || (ctemp > (c+3)))) && (((ltemp)<15 && (ltemp)>=0) && ((ctemp)<24 && (ctemp)>=0)))
+                           if ( (((ltemp < l) || (ltemp > (l+3))) || ((ctemp < c) || (ctemp > (c+3)))) && (((ltemp)<15 && (ltemp)>=0) && ((ctemp)<24 && (ctemp)>=0))) //Verifica se a posição a ver avaliada está dentro do tabuleiro e se está fora da quadricula em que a peça se encontra
                            {
-                               if (tabuleiro[ltemp][ctemp] != 45 && tabuleiro[ltemp][ctemp] != 0) //O que faz a verificação
+                               if (tabuleiro[ltemp][ctemp] != 45 ) //O que faz a verificação
                                {
                                    return 1;
                                }
@@ -64,8 +89,18 @@ int restricaoUm(int l, int c,char tabuleiro[15][24]){
         }
     return 0;
 };
-//Função que representa o tabuleiro
-void mostratabuleiro(int linhas, int colunas,char tabuleiro[15][24],int pecas[8]){
+
+
+
+/*
+*Nome da funcao: mostraTabuleiro
+*
+*Objetivo da funcao: Imprime o tabuleiro
+*
+*Argumentos de entrada: linhas e colunas (numero de linhas e de colunas) e tabuleiro para ser impresso
+*/
+
+void mostraTabuleiro(int linhas, int colunas,char tabuleiro[15][24]){
     int i, j,nmr;
     char letras [24] = {"ABCDEFGHIJKLMNOPQRSTUVWX"};
     for (i = 0; i<linhas; i++){ //Altera a linha
@@ -89,11 +124,21 @@ void mostratabuleiro(int linhas, int colunas,char tabuleiro[15][24],int pecas[8]
     }
     printf("\n");
 };
-//Função que chama o modo de posicionamento 1
+
+
+
+/*
+*Nome da funcao: modoPos1
+*
+*Objetivo da funcao: Aplica o modo de posicionamento 1
+*
+*Argumentos de entrada: linhas e colunas (numero de linhas e de colunas) e tabuleiro em que se quer colocar as peças, o array peças como referencia para o programa poder anotar o nmr de peças que usou e bilbio para as peças poderem ser chamadas
+*/
+
 void modoPos1(int linhas,int colunas, char tabuleiro[][24],int pecas[], char biblio[43][3][3]){
     int i,j,m,n,tipoPeca,pecaRandom,try;
-    for (i = 0; i < linhas; i=i+3){  //altera a peça na horizontal
-        for ( j = 0; j < colunas; j=j+3){ //altera a peça na vertical
+    for (i = 0; i < linhas; i=i+3){  //altera a quadricula na horizontal
+        for ( j = 0; j < colunas; j=j+3){ //altera a quadricula na vertical
             try=0;
             do{
 
@@ -102,13 +147,13 @@ void modoPos1(int linhas,int colunas, char tabuleiro[][24],int pecas[], char bib
                 for ( m = 0; m < 3 ; m++){ //altera a coluna
                     for (n = 0; n < 3; n++){ //altera a linha
 
-                        tabuleiro[(m+i)][(n+j)]=biblio[0][m][n]; //Isto aqui não é trivial?
+                        tabuleiro[(m+i)][(n+j)]=biblio[0][m][n]; //garantir que o local de posicionamento está limpo
                     }
                 }
 
                 for ( m = 0; m < 3 ; m++){
                     for (n = 0; n < 3; n++){
-                        tabuleiro[(m+i)][(n+j)]=biblio[pecaRandom][m][n]; //Print da coordenada da peça com o valor da coordenada da peça selecionada
+                        tabuleiro[(m+i)][(n+j)]=biblio[pecaRandom][m][n]; //coloca as coordenada da peça com o valor da coordenada da peça selecionada
                     }
                 }
 
@@ -144,6 +189,18 @@ void modoPos1(int linhas,int colunas, char tabuleiro[][24],int pecas[], char bib
 
 };
 
+
+
+/*
+*Nome da funcao: modoPos2
+*
+*Objetivo da funcao: Aplica o modo de posicionamento 2
+*
+*Argumentos de entrada: linhas e colunas (numero de linhas e de colunas) o array pecas que contem a quantidade de peças a serem colocadas, nmrpeças, tabuleiro em que se deseja colocar as peças, biblio de peaçs e o array auxiliar inicioPecas
+*
+*Argumentos de saida: -1 caso o tabuleiro não consiga ser gerado 1 caso seja gerado com sucesso
+*/
+
 int modoPos2(int pecas[8], int linhas, int colunas, int nmrPecas, char tabuleiro[][24],char biblio[43][3][3],int inicioPecas[9]){
     int i,j,m,n,l;
     int tipoPeca,variantePeca,posicaoVariante,cnt8tentativas=0,flagPecaUsada,cnt1000=0;
@@ -156,8 +213,8 @@ int modoPos2(int pecas[8], int linhas, int colunas, int nmrPecas, char tabuleiro
             for (j = 0; j<colunas; j++){
                 tabuleiro[i][j]=45;
             }
-        } //dar set ao tabuleiro
-        nmrTotal= (linhas*colunas)/9;
+        } //garantir que o tabuleiro está a zeros
+        nmrTotal = (linhas*colunas)/9;
         for ( l = 0; l < 9; l++){
             if (l==0){
                 quantidadePecas[l]=nmrVazias; //Quantidade de peças vazias
@@ -249,6 +306,16 @@ int modoPos2(int pecas[8], int linhas, int colunas, int nmrPecas, char tabuleiro
     return -1;
 };
 
+
+
+/*
+*Nome da funcao: modoTiro1
+*
+*Objetivo da funcao: Aplica o modo de tiro 1
+*
+*Argumentos de entrada: linhas e colunas (numero de linhas e de colunas) o array pecas que contem o numero de barcos de cada tipo, tabuleiro em que se vão dar os tiros
+*/
+
 void modoTiro1(int linhas, int colunas, char tabuleiro[15][24],int pecas[8]){
     int i,j,nmrpecas=0,tiroL,tiroC,nmrjogadas=0;
     char tiro=0;
@@ -292,8 +359,18 @@ void modoTiro1(int linhas, int colunas, char tabuleiro[15][24],int pecas[8]){
     
     
     printf("Fim de jogo: %d jogadas em %d segundos\n",nmrjogadas,(int)t);
-    mostratabuleiro(linhas,colunas,tabuleiro,pecas);
+    mostraTabuleiro(linhas,colunas,tabuleiro);
 };
+
+
+
+/*
+*Nome da funcao: modoTiro2
+*
+*Objetivo da funcao: Aplica o modo de tiro 2
+*
+*Argumentos de entrada: linhas e colunas (numero de linhas e de colunas) o array pecas que contem o numero de barcos de cada tipo, nmrPecas existentes, tabuleiro em que se vão dar os tiros
+*/
 
 void modoTiro2(int linhas, int colunas,int nmrPecas, char tabuleiro[15][24],int pecas[8]){
    int i,j,tipoPeca=1,nmrDePeca=0,posicaoTiro,nmrjogadas=0;
@@ -337,8 +414,18 @@ void modoTiro2(int linhas, int colunas,int nmrPecas, char tabuleiro[15][24],int 
     }
     t = time(NULL) - t;
     printf("Fim de jogo: %d jogadas em %d segundos\n",nmrjogadas,(int)t);
-    mostratabuleiro(linhas,colunas,tabuleiro,pecas);
+    mostraTabuleiro(linhas,colunas,tabuleiro);
 };
+
+
+
+/*
+*Nome da funcao: modoTiro3
+*
+*Objetivo da funcao: Aplica o modo de tiro 3
+*
+*Argumentos de entrada: linhas e colunas (numero de linhas e de colunas) o array pecas que contem o numero de barcos de cada tipo, nmrPecas existentes, tabuleiro em que se vão dar os tiros
+*/
 
 void modoTiro3(int linhas, int colunas,int nmrPecas, char tabuleiro[15][24],int pecas[8]){
    int m,n,ltemp,ctemp,i,j,tipoPeca=1,nmrDePeca=0,posicaoTiro,nmrjogadas=0;
@@ -356,6 +443,7 @@ void modoTiro3(int linhas, int colunas,int nmrPecas, char tabuleiro[15][24],int 
                 }
                 printf("%c%d\n",j+ordemTiro[posicaoTiro][1]+65,linhas-ordemTiro[posicaoTiro][0]-i);
                 scanf("%c",&tiro);
+                limpaStdin();
                 limpaStdin();
                 nmrjogadas++;
                 tabuleiro[i+ordemTiro[posicaoTiro][0]][j+ordemTiro[posicaoTiro][1]]=tiro; 
@@ -382,7 +470,7 @@ void modoTiro3(int linhas, int colunas,int nmrPecas, char tabuleiro[15][24],int 
                         }
                     }
                 }else{
-                tabuleiro[i+ordemTiro[posicaoTiro][0]][j+ordemTiro[posicaoTiro][1]]='x';
+                tabuleiro[i+ordemTiro[posicaoTiro][0]][j+ordemTiro[posicaoTiro][1]]='x'; //Em tudo semelhante ao modo de tiro 2 MAS este x existe para a area á volta da peça que ja foi afundada
                 }
             }
             if (nmrPecas==0){
@@ -405,9 +493,19 @@ void modoTiro3(int linhas, int colunas,int nmrPecas, char tabuleiro[15][24],int 
         }
     }
     printf("Fim de jogo: %d jogadas em %d segundos\n",nmrjogadas,(int)t);
-    mostratabuleiro(linhas,colunas,tabuleiro,pecas);
+    mostraTabuleiro(linhas,colunas,tabuleiro);
 };
-//Função do modo de jogo 0
+
+
+
+/*
+*Nome da funcao: modoJogo0
+*
+*Objetivo da funcao: Aplica o modo de jogo 0 (gera um tabuleiro)
+*
+*Argumentos de entrada: modoPosicionamento define o modo de posicionamento que vai ser aplicado, o array pecas como referencia vai guardar as peças a serem usadas, linhas e colunas definem o nmr de linhas e colunas , nmrPecas indica o numero total de barcos , tabuleiro em que se vai aplicar o modo de jogo e os array que tem as codificações de peças
+*/
+
 void modoJogo0(int modoPosicionamento, int pecas[], int linhas, int colunas, int nmrPecas, char tabuleiro[][24], char biblio[43][3][3],int inicioPecas[9]){
 
     switch (modoPosicionamento){ //Selecionar o modo de posicionamento
@@ -424,26 +522,36 @@ void modoJogo0(int modoPosicionamento, int pecas[], int linhas, int colunas, int
         modoPos1(linhas,colunas,tabuleiro,pecas,biblio); //modo de posicionamento 1
         break;
     }
-    mostratabuleiro(linhas,colunas,tabuleiro,pecas); //Função que dá print ao tabuleiro
+    mostraTabuleiro(linhas,colunas,tabuleiro); //Função que dá print ao tabuleiro
 }
+
+
+
+/*
+*Nome da funcao: modoJogo1
+*
+*Objetivo da funcao: Aplica o modo de jogo 1 (gera um tabuleiro e aceita input para tiros)
+*
+*Argumentos de entrada: modoPosicionamento define o modo de posicionamento que vai ser aplicado, o array pecas como referencia vai guardar as peças a serem usadas, linhas e colunas definem o nmr de linhas e colunas , nmrPecas indica o numero total de barcos , tabuleiro em que se vai aplicar o modo de jogo e os array que tem as codificações de peças
+*/
 
 void modoJogo1(int modoPosicionamento, int pecas[], int linhas, int colunas, int nmrPecas, char tabuleiro[][24], char biblio[43][3][3],int inicioPecas[9]){
     int i,j,l,nmrJogadas=0,nmrCasasOcupadas=0;
-    char posicoes[15][24]={0};
+    char posicoes[15][24];
     time_t t; //Inicia o timer
     char c;
  
-    switch (modoPosicionamento) //Selecionar o modo de posicionamento
-    {
-    case 1:
-        modoPos1(linhas,colunas,tabuleiro,pecas,biblio);
-        break;
+    switch (modoPosicionamento){ //Selecionar o modo de posicionamento
+    case 2:
 
-    default:
-        if(modoPos2(pecas,linhas,colunas,nmrPecas,tabuleiro,biblio,inicioPecas)==-1){
+        if(modoPos2(pecas,linhas,colunas,nmrPecas,tabuleiro,biblio,inicioPecas)==-1){ //Impossivel gerar o tabuleiro devido ao numero de resets
             printf("Tabuleiro impossivel de ser gerado");
             exit(0);
         }
+        break;
+
+    default:
+        modoPos1(linhas,colunas,tabuleiro,pecas,biblio); //modo de posicionamento 1
         break;
     }
 
@@ -483,6 +591,16 @@ void modoJogo1(int modoPosicionamento, int pecas[], int linhas, int colunas, int
     printf("Fim de jogo: %d jogadas em %d segundos\n",nmrJogadas,(int)t);
 }
 
+
+
+/*
+*Nome da funcao: modoJogo2
+*
+*Objetivo da funcao: Aplica o modo de jogo 2 (escolhe um modo de tiro)
+*
+*Argumentos de entrada: modoDisparo define o modo de disparo que vai ser aplicado, o array pecas como referencia vai guardar as peças a serem usadas, linhas e colunas definem o nmr de linhas e colunas , nmrPecas indica o numero total de barcos , tabuleiro em que se vai aplicar o modo de jogo
+*/
+
 void modoJogo2(int modoDisparo, int pecas[], int linhas, int colunas, int nmrPecas, char tabuleiro[15][24]){
 
 switch (modoDisparo)
@@ -504,6 +622,15 @@ default:
 
 
 
+/*
+*Nome da funcao: main
+*
+*Objetivo da funcao: Estrutura central do programa
+*
+*Argumentos de entrada: argc e *argv para o funcionamento do getopt
+*
+*Argumentos de saida: -1 caso haja erros | 1 caso o jogo corra sem erros | 0 caso o jogador peça ajuda
+*/
 
 int main(int argc, char *argv[]){
 
@@ -599,8 +726,10 @@ int main(int argc, char *argv[]){
             {
             case 't':
                 if (sscanf(optarg, "%dx%d", &linhas, &colunas) != 2){
-                    printf("Failled to read STDIN!\n");
-                    exit(0);
+                    printf("Erro ao ler o input de -t !\n");
+                    textoAjuda();
+                    printf("-1");
+                    return -1;
                 }
                 if (((linhas < 9) || (linhas>15)) || ((colunas < 9) || (colunas>24)) || ((colunas%3 != 0) || (linhas%3 != 0))){
                     printf("Valores inválidos para o tamanho, por favor tente de novo\n");
@@ -613,8 +742,10 @@ int main(int argc, char *argv[]){
 
             case 'j':
                 if (sscanf(optarg, "%d", &modoJogo) != 1){
-                    printf("Failled to read STDIN!\n");
-                    exit(0);
+                    printf("Erro ao ler o input de -j !\n");
+                    textoAjuda();
+                    printf("-1");
+                    return -1;
                 }
                 if (modoJogo<0 || modoJogo>2){
                     printf("Valores inválidos para o modo de jogo, por favor tente de novo\n");
@@ -627,8 +758,10 @@ int main(int argc, char *argv[]){
 
             case 'p':
                 if (sscanf(optarg, "%d", &modoPosicionamento) != 1){
-                    printf("Failled to read STDIN!\n");
-                    exit(0);
+                    printf("Erro ao ler o input de -p !\n");
+                    textoAjuda();
+                    printf("-1");
+                    return -1;
                 }
                 if (modoPosicionamento<1 || modoPosicionamento>2){
                     printf("Valores inválidos para o modo de posicionamento, por favor tente de novo\n");
@@ -641,8 +774,10 @@ int main(int argc, char *argv[]){
 
             case 'd':
                 if (sscanf(optarg, "%d", &modoDisparo) != 1){
-                    printf("Failled to read STDIN!\n");
-                    exit(0);
+                    printf("Erro ao ler o input de -d !\n");
+                    textoAjuda();
+                    printf("-1");
+                    return -1;
                 }
                 flagMDAlterado=1;
                 if (modoDisparo<1 || modoDisparo>3){
@@ -656,57 +791,73 @@ int main(int argc, char *argv[]){
 
             case '1':
                 if (sscanf(optarg, "%d", &pecas[0]) != 1){
-                    printf("Failled to read STDIN!\n");
-                    exit(0);
+                    printf("Erro ao ler o input de -1 !\n");
+                    textoAjuda();
+                    printf("-1");
+                    return -1;
                 }
             break;
 
             case '2':
                 if (sscanf(optarg, "%d", &pecas[1]) != 1){
-                    printf("Failled to read STDIN!\n");
-                    exit(0);
+                    printf("Erro ao ler o input de -2 !\n");
+                    textoAjuda();
+                    printf("-1");
+                    return -1;
                 }
             break;
 
             case '3':
                 if (sscanf(optarg, "%d", &pecas[2]) != 1){
-                    printf("Failled to read STDIN!\n");
-                    exit(0);
+                    printf("Erro ao ler o input de -3 !\n");
+                    textoAjuda();
+                    printf("-1");
+                    return -1;
                 }
             break;
 
             case '4':
                 if (sscanf(optarg, "%d", &pecas[3]) != 1){
-                    printf("Failled to read STDIN!\n");
-                    exit(0);
+                    printf("Erro ao ler o input de -4 !\n");
+                    textoAjuda();
+                    printf("-1");
+                    return -1;
                 }
             break;
 
             case '5':
                 if (sscanf(optarg, "%d", &pecas[4]) != 1){
-                    printf("Failled to read STDIN!\n");
-                    exit(0);
+                    printf("Erro ao ler o input de -5 !\n");
+                    textoAjuda();
+                    printf("-1");
+                    return -1;
                 }
             break;
 
             case '6':
                 if (sscanf(optarg, "%d", &pecas[5]) != 1){
-                    printf("Failled to read STDIN!\n");
-                    exit(0);
+                    printf("Erro ao ler o input de -6 !\n");
+                    textoAjuda();
+                    printf("-1");
+                    return -1;
                 }
             break;
 
             case '7':
                 if (sscanf(optarg, "%d", &pecas[6]) != 1){
-                    printf("Failled to read STDIN!\n");
-                    exit(0);
+                    printf("Erro ao ler o input de -7 !\n");
+                    textoAjuda();
+                    printf("-1");
+                    return -1;
                 }
             break;
 
             case '8':
                 if (sscanf(optarg, "%d", &pecas[7]) != 1){
-                    printf("Failled to read STDIN!\n");
-                    exit(0);
+                    printf("Erro ao ler o input de -8 !\n");
+                    textoAjuda();
+                    printf("-1");
+                    return -1;
                 }
             break;
 
@@ -724,15 +875,14 @@ int main(int argc, char *argv[]){
             }
         }
 
-
     if ((modoJogo != 2) && (flagMDAlterado !=0)){
+         printf("Modo de jogo incompativel com o modo de tiro escolhido\n");
         textoAjuda();
         printf("-1");
         return -1;
     }
 
-
-    for (count = 0; count < 7; count++){                    //restição 3 e 4
+    for (count = 0; count < 7; count++){//restição 3 e 4
         if (pecas[count]<pecas[count+1]){
             textoAjuda();
             printf("-1");
@@ -751,14 +901,6 @@ int main(int argc, char *argv[]){
         }
     }
 
-    /*if (modoPosicionamento==1 && pecas[0]!=0)
-    {
-        textoAjuda();
-        printf("-1");
-        return -1;
-    }*/
-
-
     //selecionar o modo de jogo
     switch (modoJogo)
     {
@@ -769,7 +911,7 @@ int main(int argc, char *argv[]){
 
     case 1:
         modoJogo1(modoPosicionamento,pecas,linhas,colunas,nmrPecas,tabuleiro,biblio,inicioPecas);
-        mostratabuleiro(linhas,colunas,tabuleiro,pecas);
+        mostraTabuleiro(linhas,colunas,tabuleiro);
         return 1;
     break;
 
