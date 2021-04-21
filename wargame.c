@@ -335,8 +335,10 @@ void modoTiro1(int linhas, int colunas, char tabuleiro[15][24],int pecas[8]){
         }while( tabuleiro[linhas-1-tiroL][tiroC] != 45);
         nmrjogadas=nmrjogadas+1;
         printf("%c%d\n",tiroC+65,tiroL+1);
-        scanf("%c",&tiro);
-        limpaStdin();
+        do{
+            scanf("%c",&tiro);
+            limpaStdin();
+        } while (tiro != '-' && tiro != '1' && tiro != '2' && tiro != '2' && tiro != '3' && tiro != '4' && tiro != '5' && tiro != '6' && tiro != '7' && tiro != '8');
         if (tiro!='-') //se o alvo for diferente de '-'
         {
             tabuleiro[linhas-1-tiroL][tiroC]=tiro;
@@ -387,8 +389,10 @@ void modoTiro2(int linhas, int colunas,int nmrPecas, char tabuleiro[15][24],int 
             for ( posicaoTiro = 0; posicaoTiro < 9; posicaoTiro++)           //vai percorrer o padrão descrito em cima
             {
                 printf("%c%d\n",j+ordemTiro[posicaoTiro][1]+65,linhas-ordemTiro[posicaoTiro][0]-i);
-                scanf("%c",&tiro);
-                limpaStdin();
+                do{
+                    scanf("%c",&tiro);
+                    limpaStdin();
+                } while (tiro != '-' && tiro != '1' && tiro != '2' && tiro != '2' && tiro != '3' && tiro != '4' && tiro != '5' && tiro != '6' && tiro != '7' && tiro != '8');
                 nmrjogadas++;
                 tabuleiro[i+ordemTiro[posicaoTiro][0]][j+ordemTiro[posicaoTiro][1]]=tiro;    
                 if(tiro != 45)      //se for diferente de um traço. aka se for uma peça, regista-se o tipo de peça e aumenta-se a contagem do nmr de pedaços de peças, quando esses dois numeros forem iguais é pq o barco foi ao fundo aka se afundares 2 peças do barco tipo 2 então o barco afunda e este loop serve para fazer isso
@@ -442,8 +446,10 @@ void modoTiro3(int linhas, int colunas,int nmrPecas, char tabuleiro[15][24],int 
                     continue;
                 }
                 printf("%c%d\n",j+ordemTiro[posicaoTiro][1]+65,linhas-ordemTiro[posicaoTiro][0]-i);
-                scanf("%c",&tiro);
-                limpaStdin();
+                do{
+                    scanf("%c",&tiro);
+                    limpaStdin();
+                } while (tiro != '-' && tiro != '1' && tiro != '2' && tiro != '2' && tiro != '3' && tiro != '4' && tiro != '5' && tiro != '6' && tiro != '7' && tiro != '8');
                 nmrjogadas++;
                 tabuleiro[i+ordemTiro[posicaoTiro][0]][j+ordemTiro[posicaoTiro][1]]=tiro; 
                 if(tiro != 45){
