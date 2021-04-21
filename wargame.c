@@ -586,7 +586,7 @@ void modoJogo1(int modoPosicionamento, int pecas[], int linhas, int colunas, int
     while (nmrCasasOcupadas>0){ //Disparar numa peça
         do{
             while (scanf("%c%d", &c,&l) != 2){
-                printf("*Failled to read STDIN!\n");
+                printf("*Erro ao ler o input!\n");
                 printf("*Introduza novamente\n");
                 limpaStdin();
             }
@@ -891,7 +891,7 @@ int main(int argc, char *argv[]){
         }
 
     if ((modoJogo != 2) && (flagMDAlterado !=0)){
-         printf("Modo de jogo incompativel com o modo de tiro escolhido\n");
+        printf("Modo de jogo incompativel com o modo de tiro escolhido\n");
         textoAjuda();
         printf("-1");
         return -1;
