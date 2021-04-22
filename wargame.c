@@ -514,7 +514,7 @@ void modoTiro3(int linhas, int colunas,int nmrPecas, char tabuleiro[15][24],int 
 void modoJogo0(int modoPosicionamento, int pecas[], int linhas, int colunas, int nmrPecas, char tabuleiro[][24], char biblio[43][3][3],int inicioPecas[9]){
 
     switch (modoPosicionamento){ //Selecionar o modo de posicionamento
-
+    
     case 2:
 
         if(modoPos2(pecas,linhas,colunas,nmrPecas,tabuleiro,biblio,inicioPecas)==-1){ //Impossivel gerar o tabuleiro devido ao numero de resets
@@ -527,6 +527,7 @@ void modoJogo0(int modoPosicionamento, int pecas[], int linhas, int colunas, int
         modoPos1(linhas,colunas,tabuleiro,pecas,biblio); //modo de posicionamento 1
         break;
     }
+    printf("%dx%d %d %d %d %d %d %d %d %d\n",linhas,colunas,pecas[0],pecas[1],pecas[2],pecas[3],pecas[4],pecas[5],pecas[6],pecas[7]);
     mostraTabuleiro(linhas,colunas,tabuleiro); //Função que dá print ao tabuleiro
 }
 
@@ -895,16 +896,10 @@ int main(int argc, char *argv[]){
             break;
             }
         }
-
-    if ((modoJogo != 2) && (flagMDAlterado !=0)){
-        printf("Modo de jogo incompativel com o modo de tiro escolhido\n");
-        textoAjuda();
-        printf("-1");
-        return -1;
-    }
-
+    
     for (count = 0; count < 7; count++){//restição 3 e 4
         if (pecas[count]<pecas[count+1]){
+            printf("Falhou restricao 3\n");
             textoAjuda();
             printf("-1");
             return -1;
@@ -916,11 +911,44 @@ int main(int argc, char *argv[]){
         }
 
         if (nmrPecas>((linhas*colunas/9)/2)){
+            printf("Falhou restricao 4\n");
             textoAjuda();
             printf("-1");
             return -1;
         }
     }
+
+
+
+    if ((modoJogo != 2) && (flagMDAlterado !=0)){
+        printf("Modo de jogo incompativel com o modo de tiro escolhido\n");
+        textoAjuda();
+        printf("-1");
+        return -1;
+    }
+
+    
+    if (modoPosicionamento == 2 && pecas[0] == 0){
+        printf("Para este modo de posicionamento funcionar escolha o nmr de pecas\n");
+        textoAjuda();
+        printf("-1");
+        return -1;
+    }
+
+    if (modoJogo != 2 && modoPosicionamento==1 && pecas[0] != 0 ){
+        printf("Para este modo de posicionamente funcionar nao escolha o nmr de pecas\n");
+        textoAjuda();
+        printf("-1");
+        return -1;
+    }
+
+    if (modoJogo == 2 && pecas[0] == 0){
+        printf("Para este modo de jogo funcionar indique o numero de pecas\n");
+        textoAjuda();
+        printf("-1");
+        return -1;
+    }
+
 
     //selecionar o modo de jogo
     switch (modoJogo)
@@ -941,7 +969,7 @@ int main(int argc, char *argv[]){
         return 1;
     break;
     }
-
+    printf("Algo correu mal, por favor tente de novo\n");
     textoAjuda();
     printf("-1");
     return -1;
