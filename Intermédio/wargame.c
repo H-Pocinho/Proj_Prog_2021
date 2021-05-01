@@ -432,7 +432,7 @@ void modoTiro2(int linhas, int colunas,int nmrPecas, char tabuleiro[15][24],int 
 */
 
 void modoTiro3(int linhas, int colunas,int nmrPecas, char tabuleiro[15][24],int pecas[8]){
-   int m,n,ltemp,ctemp,i,j,tipoPeca=1,nmrDePeca=0,posicaoTiro,nmrjogadas=0;
+   int m,n,ltemp,ctemp,i,j,k,tipoPeca=1,nmrDePeca=0,posicaoTiro,nmrjogadas=0,tiroValido=0;
    char tiro;
    time_t t;
    int ordemTiro[9][2]={{1,1},{0,1},{2,1},{1,0},{1,2},{0,0},{2,2},{0,2},{2,0}};
