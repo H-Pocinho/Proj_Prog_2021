@@ -93,6 +93,36 @@ data *insere_cabeca_data(data *head,data *nodulo){
 }
 
 /*
+*Nome da funcao: insere_cauda_data
+*
+*Objetivo da funcao: insere um nó na cauda da lista
+*
+*Argumentos de entrada:
+*   -*head: ponteiro para a cabeça da lista
+*   -*nodulo: ponteiro para o nó que se quer inserir
+*
+*Argumentos de saida:
+*   -head: ponteiro para cabeça da lista com o nó já inserido
+*/
+
+data *insere_cauda_data(data *head,data *nodulo){
+    data *aux;
+    if (head==NULL)
+    {
+        head = nodulo;
+    }else{
+        aux=head;
+        while (aux->next!=NULL)
+        {
+            aux=aux->next;
+        }
+        aux->next=nodulo;
+    }
+    return head;
+}
+
+
+/*
 *Nome da funcao: insere_cabeca_variable_data
 *
 *Objetivo da funcao: insere um nó na cabeça da lista de dados variaveis
@@ -112,6 +142,35 @@ variableData *insere_cabeca_variable_data(variableData *head,variableData *nodul
     }else{
         nodulo->next=head;
         head=nodulo;
+    }
+    return head;
+}
+
+/*
+*Nome da funcao: insere_cauda_variable_data
+*
+*Objetivo da funcao: insere um nó na cauda da lista de dados variaveis
+*
+*Argumentos de entrada:
+*   -*head: ponteiro para a cabeça da lista de dados variaveis
+*   -*nodulo: ponteiro para o nó que se quer inserir
+*
+*Argumentos de saida:
+*   -head: ponteiro para cabeça da lista de dados variaveis com o nó já inserido
+*/
+
+variableData *insere_cauda_variable_data(variableData *head,variableData *nodulo){
+    variableData *aux;
+    if (head==NULL)
+    {
+        head = nodulo;
+    }else{
+        aux=head;
+        while (aux->next!=NULL)
+        {
+            aux=aux->next;
+        }
+        aux->next=nodulo;
     }
     return head;
 }

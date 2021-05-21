@@ -208,7 +208,7 @@ data* read_DAT(data *head,char nome[]){
         fread(noData,sizeof(data),1,fptr);                                                          //Preenche o espaço alocado com a informação dos ficheiro
         noData->next=NULL;
         noData->dadosSemanais=NULL;
-        head=insere_cabeca_data(head,noData);                                                       //Coloca o nó na lista
+        head=insere_cauda_data(head,noData);                                                       //Coloca o nó na lista
 
         while (finalizador!='#')                                                                    //Percorre o ficheiro até encontrar o caracter de fim de nó
         {
@@ -219,7 +219,7 @@ data* read_DAT(data *head,char nome[]){
             
             fread(noVariableData,sizeof(variableData),1,fptr);                                      //Preenche o espaço alocado com a informação dos ficheiro
             noVariableData->next=NULL;
-            noData->dadosSemanais=insere_cabeca_variable_data(noData->dadosSemanais,noVariableData);//Coloca o nó na lista
+            noData->dadosSemanais=insere_cauda_variable_data(noData->dadosSemanais,noVariableData);//Coloca o nó na lista
 
             fread(&finalizador,sizeof(char),1,fptr);                                                //Procura o caracter finalizador
             if (finalizador!='#')

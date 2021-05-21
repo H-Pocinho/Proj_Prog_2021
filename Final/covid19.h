@@ -99,8 +99,10 @@ inputStruct verificacao_input(int counter, char *input[]);
 
 data *cria_pais(char nome[], char codigo[], char continente[10], long int pop);
 data *insere_cabeca_data(data *head,data *nodulo);
+data *insere_cauda_data(data *head,data *nodulo);
 variableData *cria_variable_data(char indicador[10], int contagemSemanal, char semanaAno[10], char ratio14Dias[25], long int contagemComulativa);
 variableData *insere_cabeca_variable_data(variableData *head,variableData *nodulo);
+variableData *insere_cauda_variable_data(variableData *head,variableData *nodulo);
 data *cria_lista_paises(data *head, returnStruct dadosFicheiro);
 void adiciona_variable_data(data *head, returnStruct dadosFicheiro);
 data *coloca_cauda(data *list, data *element);
