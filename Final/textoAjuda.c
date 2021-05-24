@@ -9,7 +9,7 @@
 void texto_ajuda()
 {
     printf("\nBem-vindo ao programa de analise de dados relativos ao covid19\n");
-    printf("Projecto de Prog feito por:\n");
+    printf("Projecto de Final para a UC de Programação desenvolvido por:\n");
     printf("\tHenrique Alves Pocinho Nº99952\n");
     printf("\tRodrigo Pereira Nº100080\n\n");
 
@@ -38,9 +38,10 @@ void texto_ajuda()
     printf("        > dates yyyy-ww yyyy-www: restringe os dados ao intervalo indicado\n\n");
 
     printf("»   -i x : Permite introduzir o nome do ficheiro de entrada de dados (de cariz obrigatório para o funcionamento do programa)\n\n");
+    printf("        > Caso o ficheiro introduzido seja do tipo .dat todas as opções opcionais serão ignoradas\n");
     
     printf("»   -o x : Permite introduzir o nome do ficheiro de saida de dados (de cariz obrigatório para o funcionamento do programa)\n\n");
 
-    printf("»   -h x : Mostra este texto\n\n");
+    printf("»   -h : Mostra este texto\n\n");
 
 }

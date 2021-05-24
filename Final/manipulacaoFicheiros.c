@@ -358,9 +358,8 @@ int verifica_linha(char linha[500],int nmrLinha){
 
     while (i<strlen(linha))                                                             //Vai percorrer a linha caracter a caracter e vai analisar a linha com base nas divisões de coluna
     {
-
         if(coluna==1){
-            if(isalpha(linha[i])==0 && linha[i]!=' ' && linha[i]!='-'){                                  //Analise da coluna 1 (paises)
+            if(isalpha(linha[i])==0 && linha[i]!=' ' && linha[i]!='-'){                 //Analise da coluna 1 (paises)
                 printf("-1 Erro de Leitura\n");
                 printf("Na linha %d coluna %d\n",nmrLinha,coluna);
                 return 1;
