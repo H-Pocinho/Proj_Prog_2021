@@ -7,6 +7,19 @@
 #include <string.h>
 #include <ctype.h> 
 
+/*
+*Projecto final da UC de Prog
+*
+*Ficheiros:
+* -> covid19.c: contem o main do projecto
+* -> input.c: contem funções de tratamento do input pela linha de comandos
+* -> listas.c: contem funções de tratamento e manipulação de listas
+* -> manipulacaoFicheiros.c: contem funções de tratamento e manipulação de ficheiros
+* -> ordenacaoDados.c: contem funções para a ordenação dos dados
+* -> restricaoDados.c: contem funções para a restrição dos dados
+* -> selecaoDados.c: contem funções para a seleção dos dados
+* -> textoAjuda.c: contem funções para apresentação do texto de ajuda
+*/
 
 typedef struct variableData {  //Struct que define um nó da lista de dados variaveis
     char indicator[10];

@@ -360,8 +360,8 @@ int verifica_linha(char linha[500],int nmrLinha){
     {
         if(coluna==1){
             if(isalpha(linha[i])==0 && linha[i]!=' ' && linha[i]!='-'){                 //Analise da coluna 1 (paises)
-                printf("-1 Erro de Leitura\n");
-                printf("Na linha %d coluna %d\n",nmrLinha,coluna);
+                fprintf(stderr,"-1 Erro de Leitura\n");
+                fprintf(stderr,"Na linha %d coluna %d\n",nmrLinha,coluna);
                 return 1;
             }
         }
@@ -369,8 +369,8 @@ int verifica_linha(char linha[500],int nmrLinha){
         if(coluna==2){                                                                  //Analise da coluna 2 (codigo dos paises)
             o++;
             if(linha[i]<65 || linha[i]>90 || (linha[i+1]==',' && o<3) || o>3){
-                printf("-1 Erro de Leitura\n");
-                printf("Na linha %d coluna %d\n",nmrLinha,coluna);
+                fprintf(stderr,"-1 Erro de Leitura\n");
+                fprintf(stderr,"Na linha %d coluna %d\n",nmrLinha,coluna);
                 return 1;
             }
         }
@@ -379,16 +379,16 @@ int verifica_linha(char linha[500],int nmrLinha){
             guardaColuna[o]=linha[i];
             o++;
             if(isalpha(linha[i])==0){
-                printf("-1 Erro de Leitura\n");
-                printf("Na linha %d coluna %d\n",nmrLinha,coluna);
+                fprintf(stderr,"-1 Erro de Leitura\n");
+                fprintf(stderr,"Na linha %d coluna %d\n",nmrLinha,coluna);
                 return 1;
             }
         }
 
         if(coluna==4||coluna==6||coluna==9){                                            //Analise das colunas 4,6,9 (população, contagem semanal e contagem acumulada)
             if(isdigit(linha[i])==0){
-                printf("-1 Erro de Leitura\n");
-                printf("Na linha %d coluna %d\n",nmrLinha,coluna);
+                fprintf(stderr,"-1 Erro de Leitura\n");
+                fprintf(stderr,"Na linha %d coluna %d\n",nmrLinha,coluna);
                 return 1;
             }
         }
@@ -397,23 +397,23 @@ int verifica_linha(char linha[500],int nmrLinha){
             for ( o = i; o < i+4; o++)
             {
                 if(isdigit(linha[o])==0){
-                    printf("-1 Erro de Leitura\n");
-                    printf("Na linha %d coluna %d\n",nmrLinha,coluna);
+                    fprintf(stderr,"-1 Erro de Leitura\n");
+                    fprintf(stderr,"Na linha %d coluna %d\n",nmrLinha,coluna);
                     return 1;
                 }
             }
             
             if(linha[o++]!='-'){
-                    printf("-1 Erro de Leitura\n");
-                    printf("Na linha %d coluna %d\n",nmrLinha,coluna);
+                    fprintf(stderr,"-1 Erro de Leitura\n");
+                    fprintf(stderr,"Na linha %d coluna %d\n",nmrLinha,coluna);
                     return 1;
             }
             
             for ( o = i+5; o < i+7; o++)
             {
                 if(isdigit(linha[o])==0){
-                    printf("-1 Erro de Leitura\n");
-                    printf("Na linha %d coluna %d\n",nmrLinha,coluna);
+                    fprintf(stderr,"-1 Erro de Leitura\n");
+                    fprintf(stderr,"Na linha %d coluna %d\n",nmrLinha,coluna);
                     return 1;
                 }
             }
@@ -423,8 +423,8 @@ int verifica_linha(char linha[500],int nmrLinha){
         if (coluna==8)                                                                  //Analise da coluna 8 (rácio)
         {
             if(isdigit(linha[i])==0 && linha[i]!='.'){
-                printf("-1 Erro de Leitura\n");
-                printf("Na linha %d coluna %d\n",nmrLinha,coluna);
+                fprintf(stderr, "-1 Erro de Leitura\n");
+                fprintf(stderr,"Na linha %d coluna %d\n",nmrLinha,coluna);
                 return 1;
             }
         }
@@ -440,8 +440,8 @@ int verifica_linha(char linha[500],int nmrLinha){
                     if(strcmp(guardaColuna,keywordsValidas[o])==0){
                         if (!((o==5 || o==6) && coluna==5) && !((o!=5 && o!=6) && coluna==3))
                         {
-                            printf("-1 Erro de Leitura\n");
-                            printf("Na linha %d coluna %d\n",nmrLinha,coluna);
+                            fprintf(stderr,"-1 Erro de Leitura\n");
+                            fprintf(stderr,"Na linha %d coluna %d\n",nmrLinha,coluna);
                             return 1;
                         }
                         flagAnalisado=1;
@@ -449,8 +449,8 @@ int verifica_linha(char linha[500],int nmrLinha){
                 }
 
                 if(flagAnalisado==0){
-                    printf("-1 Erro de Leitura\n");
-                    printf("Na linha %d coluna %d\n",nmrLinha,coluna);
+                    fprintf(stderr,"-1 Erro de Leitura\n");
+                    fprintf(stderr,"Na linha %d coluna %d\n",nmrLinha,coluna);
                     return 1;
                 }
                   
@@ -466,8 +466,8 @@ int verifica_linha(char linha[500],int nmrLinha){
             o=0;                        
 
             if (linha[i]==',' && coluna !=8 ){
-                printf("-1 Erro de Leitura\n");
-                printf("Falta um parametro na linha %d coluna %d\n",nmrLinha,coluna);
+                fprintf(stderr,"-1 Erro de Leitura\n");
+                fprintf(stderr,"Falta um parametro na linha %d coluna %d\n",nmrLinha,coluna);
                 return 1;
             }
             if (linha[i]==',' && coluna==8 ){
@@ -479,8 +479,8 @@ int verifica_linha(char linha[500],int nmrLinha){
         if ((linha[i]==13 || linha[i]=='\n')  && coluna==9 && linha[i-1]!=','){
                 return 0;
         }else if((linha[i]==13 || linha[i]=='\n')  && coluna==9 && linha[i-1]==','){        //Ultimas verificações da coluna 9
-            printf("-1 Erro de Leitura\n");
-            printf("Na linha %d coluna %d\n",nmrLinha,coluna);
+            fprintf(stderr,"-1 Erro de Leitura\n");
+            fprintf(stderr,"Na linha %d coluna %d\n",nmrLinha,coluna);
             return 1;
         }
     }

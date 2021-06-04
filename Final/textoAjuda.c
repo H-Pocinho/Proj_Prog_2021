@@ -37,8 +37,8 @@ void texto_ajuda()
     printf("        > date yyyy-ww: restringe os dados à semana indicada\n");
     printf("        > dates yyyy-ww yyyy-www: restringe os dados ao intervalo indicado\n\n");
 
-    printf("»   -i x : Permite introduzir o nome do ficheiro de entrada de dados (de cariz obrigatório para o funcionamento do programa)\n\n");
-    printf("        > Caso o ficheiro introduzido seja do tipo .dat todas as opções opcionais serão ignoradas\n");
+    printf("»   -i x : Permite introduzir o nome do ficheiro de entrada de dados (de cariz obrigatório para o funcionamento do programa)\n");
+    printf("        > Caso o ficheiro introduzido seja do tipo .dat todas as opções opcionais serão ignoradas\n\n");
     
     printf("»   -o x : Permite introduzir o nome do ficheiro de saida de dados (de cariz obrigatório para o funcionamento do programa)\n\n");
 
